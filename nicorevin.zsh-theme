@@ -33,5 +33,5 @@ function virtualenv_info {
     [ $VIRTUAL_ENV ] && echo '('%F{magenta}`basename $VIRTUAL_ENV`%f') '
 }
 
-PROMPT='%{$fg[blue]%}%T%f $(virtualenv_info)%{$fg[green]%}%~%f $vcs_info_msg_0_%f
-%(0?.%{$fg[green]%}.%{$fg[red]%})$%f '
+PROMPT='%F{blue}%T%f $(virtualenv_info)%F{green}%~%f $vcs_info_msg_0_%f
+%(0?.%F{green}.%F{red})$%f '
