@@ -4,8 +4,9 @@ autoload -U add-zsh-hook
 
 add-zsh-hook precmd vcs_info
 
-# pretty colors for ls command
+# pretty dir colors
 eval $(dircolors -b)
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # enable git support
 zstyle ':vcs_info:*' enable git
