@@ -8,7 +8,7 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="nicorevin"
 
 # Example aliases
-alias vac='source venv/bin/activate'
+# alias vac='source venv/bin/activate'
 alias pmr='python manage.py runserver'
 alias dfr='diff <(pip freeze) requirements.txt'
 alias plo='pip list -o'
@@ -54,7 +54,12 @@ alias puc='yes|sudo pacman -Scc && sudo localepurge'
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git archlinux systemd heroku npm pip python virtualenv django)
+plugins=(git heroku npm pip python virtualenv django)
+if [[ $(uname) == "Linux" ]]; then
+    plugins+=(archlinux systemd)
+else
+    plugins+=(osx brew terminalapp)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
