@@ -17,6 +17,15 @@ alias ghr='git pull --rebase heroku master'
 alias pup='yaourt -Syua'
 alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
+function venv {
+    # $(which virtualenv) $HOME/.virtualenvs/${${PWD#/}//\//-}
+    $(which virtualenv) $HOME/.virtualenvs/$(basename $PWD)
+}
+
+function vac {
+    source $HOME/.virtualenvs/$(basename $PWD)/bin/activate
+}
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
