@@ -18,12 +18,23 @@ alias pup='yaourt -Syua'
 alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
 function venv {
-    # $(which virtualenv) $HOME/.virtualenvs/${${PWD#/}//\//-}
-    $(which virtualenv) $HOME/.virtualenvs/$(basename $PWD)
-}
-
-function vac {
-    source $HOME/.virtualenvs/$(basename $PWD)/bin/activate
+    venvhome=$HOME/.virtualenvs/$(basename $PWD)
+    if [[ $1 == "on" ]]; then
+        if [[ ! -d $venvhome ]]; then
+            # $(which virtualenv) $HOME/.virtualenvs/${${PWD#/}//\//-}
+            $(which virtualenv) $venvhome
+        fi
+        source $venvhome/bin/activate
+    elif [[ $1 == "off" ]]; then
+        deactivate
+    else
+        echo "Skinny virtualenv wrapper"
+        echo "Usage: venv [on|off]\n"
+        echo "Options:"
+        echo "  on      Creates virtualenv under $HOME/.virtualenvs/"
+        echo "          if it doesn't exist and activates it"
+        echo "  off     Deactivates virtualenv"
+    fi
 }
 
 # Uncomment the following line to use case-sensitive completion.
