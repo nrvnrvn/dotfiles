@@ -1,14 +1,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+# Theme
 ZSH_THEME="nicorevin"
 
-# Example aliases
-# alias vac='source venv/bin/activate'
+# Aliases
 alias pmr='python manage.py runserver'
 alias dfr='diff <(pip freeze) requirements.txt'
 alias plo='pip list -o'
@@ -17,6 +13,7 @@ alias ghr='git pull --rebase heroku master'
 alias pup='yaourt -Syua'
 alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
+# Virtualenv "wrapper"
 function venv {
     venvhome=$HOME/.virtualenvs/$(basename $PWD)
     if [[ $1 == "on" ]]; then
@@ -41,7 +38,7 @@ function venv {
 # CASE_SENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
