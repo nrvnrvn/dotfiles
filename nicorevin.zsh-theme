@@ -34,4 +34,4 @@ function virtualenv_info {
 }
 
 PROMPT='%F{blue}%T%f %F{green}%~%f $(virtualenv_info)$vcs_info_msg_0_%f
-%(0?.%F{green}.%F{red})$%f '
+%(0?.%F{green}.%F{red})%(!.#.$)%f '
