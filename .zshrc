@@ -15,7 +15,7 @@ alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
 # Virtualenv "wrapper"
 function venv {
-    venvhome=$HOME/.virtualenvs/$(basename $PWD)
+    local venvhome=$HOME/.virtualenvs/$(basename $PWD)
     if [[ $1 == "on" ]]; then
         if [[ ! -d $venvhome ]]; then
             # $(which virtualenv) $HOME/.virtualenvs/${${PWD#/}//\//-}
