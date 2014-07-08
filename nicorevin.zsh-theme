@@ -5,28 +5,15 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd vcs_info
 
 # pretty dir colors
-if [[ $(uname) == "Linux" ]] ; then
+if [[ $(uname) == 'Linux' ]] ; then
     eval $(dircolors -b)
     zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
 # enable git support
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*:*' check-for-changes true
-zstyle ':vcs_info:*:*' unstagedstr   "%F{red}!%f"
-zstyle ':vcs_info:*:*' stagedstr     "%F{green}+%f"
-zstyle ':vcs_info:*:*' actionformats "(%F{cyan}%b%f%c%u%f) (%F{yellow}%a%f)"
-zstyle ':vcs_info:*:*' formats       "(%F{cyan}%b%f%c%u%f)"
-zstyle ':vcs_info:*:*' nvcsformats   ""
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
-
-# show marker if there are untracked files
-function +vi-git-untracked {
-    # if [[ $(git symbolic-ref --short HEAD &>/dev/null) == 'true' ]] && \
-    if git status --porcelain &>/dev/null | fgrep '??' &>/dev/null ; then
-        hook_com[unstaged]='%F{yellow}?%f'$hook_com[unstaged]
-    fi
-}
+zstyle ':vcs_info:*:*' actionformats '(%F{cyan}%b%f)-(%F{yellow}%a%f) '
+zstyle ':vcs_info:*:*' formats       '(%F{cyan}%b%f) '
 
 # virtualenv prompt
 function virtualenv_info {
@@ -34,4 +21,4 @@ function virtualenv_info {
 }
 
 PROMPT='%F{blue}%T%f %F{green}%~%f $(virtualenv_info)$vcs_info_msg_0_%f
-%(0?.%F{green}.%F{red})%(!.#.$)%f '
+%(!.%F{red}#.%(0?.%F{yellow}.%F{red})$)%f '
