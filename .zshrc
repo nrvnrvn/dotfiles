@@ -15,22 +15,33 @@ alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
 # Virtualenv "wrapper"
 function venv {
-    local venvhome=$HOME/.virtualenvs/$(basename $PWD)
+    local venvhome=$HOME/.virtualenvs
+    local venvdir=$HOME/.virtualenvs/$(basename $PWD)
     if [[ $1 == "on" ]]; then
-        if [[ ! -d $venvhome ]]; then
+        if [[ ! -d $venvdir ]]; then
             # $(which virtualenv) $HOME/.virtualenvs/${${PWD#/}//\//-}
-            $(which virtualenv) $venvhome
+            $(which virtualenv) $venvdir
         fi
-        source $venvhome/bin/activate
+        source $venvdir/bin/activate
     elif [[ $1 == "off" ]]; then
         deactivate
+    elif [[ $1 == "ls" ]]; then
+        for d in $(ls -d $venvhome/*); do echo $fg[magenta]${d##*/}$reset_color; done
+    elif [[ $1 == "rm" ]]; then
+        if [ $2 ]; then
+            rm -r $venvhome/$2 && echo 'Virtualenv '$2' removed'
+        else
+            echo 'You must provide virtualenv name to remove it'
+        fi
     else
         echo "Skinny virtualenv wrapper"
         echo "Usage: venv [on|off]\n"
         echo "Options:"
-        echo "  on      Creates virtualenv under $HOME/.virtualenvs/"
-        echo "          if it doesn't exist and activates it"
-        echo "  off     Deactivates virtualenv"
+        echo "  on              Creates virtualenv under $HOME/.virtualenvs/"
+        echo "                  if it doesn't exist and activates it"
+        echo "  off             Deactivates virtualenv"
+        echo "  ls              Lists all virtualenvs"
+        echo "  rm <venvname>   Removes <venvname> virtualenv"
     fi
 }
 
