@@ -1,4 +1,14 @@
 while [ "$(sleep 5s; pgrep dwm)" ]; do
-	# xsetroot -name "$(amixer get Master|awk '/%/ {gsub(/[\[\]/]/,""); print $4}') | $( date +"%d.%m %R" )"
-	xsetroot -name "$( date +"%d.%m %R" )"
+    batt=$(LC_ALL=C acpi -b)
+    datetime=$(date +"%d.%m %R")
+        case $batt in
+        *Discharging*)
+                batt="$(echo $batt|awk '{gsub(/\,/,""); print $4}') | "
+                ;;
+        *)
+                batt=""
+                ;;
+        esac
+
+    xsetroot -name "$batt$datetime"
 done
