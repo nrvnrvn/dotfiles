@@ -17,7 +17,7 @@ zstyle ':vcs_info:*:*' formats       '(%F{cyan}%b%f) '
 
 # virtualenv prompt
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('%F{magenta}`basename $VIRTUAL_ENV`%f') '
+    [ $VIRTUAL_ENV ] && echo '('%F{magenta}${VIRTUAL_ENV##*/}%f') '
 }
 
 PROMPT='%F{blue}%T%f %F{green}%~%f $(virtualenv_info)$vcs_info_msg_0_%f
