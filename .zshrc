@@ -13,71 +13,8 @@ alias ghr='git pull --rebase heroku master'
 alias pup='yaourt -Syua'
 alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
-# Virtualenv "wrapper"
-function venv {
-    local venvhome=$HOME/.virtualenvs
-    local venvdir=$HOME/.virtualenvs/$(basename $PWD)
-    if [[ $1 == "on" ]]; then
-        if [[ ! -d $venvdir ]]; then
-            # $(which virtualenv) $HOME/.virtualenvs/${${PWD#/}//\//-}
-            $(which virtualenv) $venvdir
-        fi
-        source $venvdir/bin/activate
-    elif [[ $1 == "off" ]]; then
-        deactivate
-    elif [[ $1 == "ls" ]]; then
-        for d in $(ls -d $venvhome/*); do echo $fg[magenta]${d##*/}$reset_color; done
-    elif [[ $1 == "rm" ]]; then
-        if [ $2 ]; then
-            rm -r $venvhome/$2 && echo 'Virtualenv '$2' removed'
-        else
-            echo 'You must provide virtualenv name to remove it'
-        fi
-    else
-        echo "Skinny virtualenv wrapper"
-        echo "Usage: venv [on|off]\n"
-        echo "Options:"
-        echo "  on              Creates virtualenv under $HOME/.virtualenvs/"
-        echo "                  if it doesn't exist and activates it"
-        echo "  off             Deactivates virtualenv"
-        echo "  ls              Lists all virtualenvs"
-        echo "  rm <venvname>   Removes <venvname> virtualenv"
-    fi
-}
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to disable command auto-correction.
-# DISABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -90,6 +27,8 @@ else
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+source $HOME/.dotfiles/skinnyvirtualenvwrapper.sh
 
 # User configuration
 
