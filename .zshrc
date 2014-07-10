@@ -28,7 +28,7 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-source $HOME/.dotfiles/skinnyvirtualenvwrapper.sh
+source $HOME/.dotfiles/venv.sh
 
 # User configuration
 
