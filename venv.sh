@@ -47,7 +47,7 @@ function venv {
             _venv_help
             ;;
         *)
-            if [ -e .venv -a -e .venv2 ]; then
+            if [ ! $VIRTUAL_ENV -a -e .venv -a -e .venv2 ]; then
                 echo 'There are virtualenvs for both python 2 and 3.\n'
                 echo 'To activate '`basename $(cat .venv2)`' environment, type 2 and press [ENTER].'
                 echo 'To activate '`basename $(cat .venv)`', just press [ENTER]:'
