@@ -1,30 +1,51 @@
 # Skinny virtualenv wrapper
 function _venv_help {
     echo "Skinny virtualenv wrapper"
-    echo "Usage: venv [cmd] <args>\n"
+    echo "Usage: venv [command] [args]\n"
     echo "Commands:"
-    echo "  on <2>          Creates virtualenv under $HOME/.virtualenvs/"
-    echo "                  if it doesn't exist and activates it"
-    echo "                  python3 is default. Run '$ venv on 2'"
-    echo "                  to create python2 environment"
-    echo "  off             Deactivates virtualenv"
-    echo "  ls              Lists all virtualenvs"
-    echo "  rm <venvnames>  Removes <venvname> virtualenv"
+    echo "  on [2]                  Creates virtualenv under $HOME/.virtualenvs/"
+    echo "                          if it doesn't exist and activates it"
+    echo "                          python3.4 is default. Available options:"
+    echo "                          2.6, 2.7(2), 3.3, 3.4(3)"
+    echo "                          to create python2 environment"
+    echo "  off                     Deactivates current virtualenv"
+    echo "  ls                      Lists all virtualenvs"
+    echo "  rm venv [venv] [...]    Removes listed venv/venvs"
 }
 
 # God object
 function venv {
     [ $VENV_HOME ] || local VENV_HOME=$HOME/.virtualenvs
     local VENV_DIR=$VENV_HOME/${PWD##*/}
-    local VENV_PY=python3
+    local VENV_PY
     local VENV_FILE=.venv
-    local VENV_VER=
     case $1 in
         on)
+            case $2 in
+                (2|2.7)
+                    VENV_DIR+='_PY27'
+                    VENV_PY=python2.7
+                    ;;
+                2.6)
+                    VENV_DIR+='_PY26'
+                    VENV_PY=python2.6
+                    ;;
+                3.3)
+                    VENV_DIR+='_PY33'
+                    VENV_PY=python3.3
+                    ;;
+                ''|3|3.4)
+                    VENV_DIR+='_PY34'
+                    VENV_PY=python3.4
+                    ;;
+                *)
+                    return 1
+                    ;;
+            esac
             [ $VIRTUAL_ENV ] && deactivate
             [ "$2" = '2' ] && VENV_VER='2' && VENV_DIR+='_PY2' && VENV_PY=python2
-            [ -d $VENV_DIR -a -f $VENV_DIR/bin/activate ] || $(which virtualenv) $VENV_DIR -p $VENV_PY
-            [ -f $VENV_FILE$VENV_VER -a "$(cat $VENV_FILE$VENV_VER)" != $VENV_DIR ] && echo $VENV_DIR > $VENV_FILE$VENV_VER
+            [ -f $VENV_DIR/bin/activate ] || $(which virtualenv) $VENV_DIR -p $VENV_PY
+            [ -f $VENV_FILE ] && [ "$(cat $VENV_FILE)" != $VENV_DIR ] && echo $VENV_DIR > $VENV_FILE
             source $VENV_DIR/bin/activate
             ;;
         off)
@@ -43,26 +64,8 @@ function venv {
                 echo 'You must provide at least one virtualenv name to remove it'
             fi
             ;;
-        help)
-            _venv_help
-            ;;
         *)
-            if [ ! $VIRTUAL_ENV -a -e .venv -a -e .venv2 ]; then
-                echo 'There are virtualenvs for both python 2 and 3.\n'
-                echo 'To activate '`basename $(cat .venv2)`' environment, type 2 and press [ENTER].'
-                echo 'To activate '`basename $(cat .venv)`', just press [ENTER]:'
-                read VENV_VER
-                case $VENV_VER in
-                    (''|2)
-                        venv on $VENV_VER
-                        ;;
-                    *)
-                        echo 'Wrong choice'
-                        ;;
-                esac
-            else
-                _venv_help
-            fi
+            _venv_help
             ;;
     esac
 }
