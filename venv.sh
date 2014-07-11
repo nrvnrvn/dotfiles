@@ -7,7 +7,6 @@ function _venv_help {
     echo "                          if it doesn't exist and activates it"
     echo "                          python3.4 is default. Available options:"
     echo "                          2.6, 2.7(2), 3.3, 3.4(3)"
-    echo "                          to create python2 environment"
     echo "  off                     Deactivates current virtualenv"
     echo "  ls                      Lists all virtualenvs"
     echo "  rm venv [venv] [...]    Removes listed venv/venvs"
@@ -22,19 +21,19 @@ function venv {
     case $1 in
         on)
             case $2 in
-                (2|2.7)
-                    VENV_DIR+='_PY27'
-                    VENV_PY=python2.7
-                    ;;
                 2.6)
                     VENV_DIR+='_PY26'
                     VENV_PY=python2.6
+                    ;;
+                (2|2.7)
+                    VENV_DIR+='_PY27'
+                    VENV_PY=python2.7
                     ;;
                 3.3)
                     VENV_DIR+='_PY33'
                     VENV_PY=python3.3
                     ;;
-                ''|3|3.4)
+                (''|3|3.4)
                     VENV_DIR+='_PY34'
                     VENV_PY=python3.4
                     ;;
@@ -43,7 +42,6 @@ function venv {
                     ;;
             esac
             [ $VIRTUAL_ENV ] && deactivate
-            [ "$2" = '2' ] && VENV_VER='2' && VENV_DIR+='_PY2' && VENV_PY=python2
             [ -f $VENV_DIR/bin/activate ] || $(which virtualenv) $VENV_DIR -p $VENV_PY
             [ -f $VENV_FILE ] && [ "$(cat $VENV_FILE)" != $VENV_DIR ] && echo $VENV_DIR > $VENV_FILE
             source $VENV_DIR/bin/activate
