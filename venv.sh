@@ -15,7 +15,7 @@ function _venv_help {
 # God object
 function venv {
     [ $VENV_HOME ] || local VENV_HOME=$HOME/.virtualenvs
-    local VENV_DIR=$VENV_HOME/$(basename $PWD)
+    local VENV_DIR=$VENV_HOME/${PWD##*/}
     local VENV_PY=python3
     local VENV_FILE=.venv
     local VENV_VER=
@@ -23,7 +23,7 @@ function venv {
         on)
             [ $VIRTUAL_ENV ] && deactivate
             [ "$2" = '2' ] && VENV_VER='2' && VENV_DIR+='_PY2' && VENV_PY=python2
-            [ ! -d $VENV_DIR ] && $(which virtualenv) $VENV_DIR -p $VENV_PY
+            [ -d $VENV_DIR -a -f $VENV_DIR/bin/activate ] || $(which virtualenv) $VENV_DIR -p $VENV_PY
             [ -f $VENV_FILE$VENV_VER -a "$(cat $VENV_FILE$VENV_VER)" != $VENV_DIR ] && echo $VENV_DIR > $VENV_FILE$VENV_VER
             source $VENV_DIR/bin/activate
             ;;
