@@ -41,8 +41,12 @@ function venv {
                     return 1
                     ;;
             esac
+            if [ ! $(command -v $VENV_PY) ]; then
+                echo "$VENV_PY not found"
+                return 1
+            fi
             [ $VIRTUAL_ENV ] && deactivate
-            [ -f $VENV_DIR/bin/activate ] || $(which virtualenv) $VENV_DIR -p $VENV_PY
+            [ -f $VENV_DIR/bin/activate ] || $(command -v virtualenv) $VENV_DIR -p $VENV_PY
             [ -f $VENV_FILE ] && [ "$(cat $VENV_FILE)" != $VENV_DIR ] && echo $VENV_DIR > $VENV_FILE
             source $VENV_DIR/bin/activate
             ;;
