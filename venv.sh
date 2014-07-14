@@ -64,28 +64,27 @@ function venv {
             fi
             for d in $*; do
                 if [ -d $VENV_HOME/$d ]; then
-                    if [ "$VENV_HOME/$d" = "$VIRTUAL_ENV" ]; then
-                        echo "Virtualenv $d is currently active."
-                        echo "Do you really want ot remove it? [yes/no]:"
-                        read VENV_RM
-                        case $VENV_RM in
-                            y|yes)
-                                venv off
-                                ;;
-                            n|no)
-                                continue
-                                ;;
-                            *)
-                                echo "Wrong choice"
-                                continue
-                                ;;
-                        esac
-                    fi
-                    rm -r $VENV_HOME/$d &>/dev/null && echo "Virtualenv $d removed"
-                else
                     echo "No such venv $d"
                     return 1
                 fi
+                if [ "$VENV_HOME/$d" = "$VIRTUAL_ENV" ]; then
+                    echo "Virtualenv $d is currently active."
+                    echo "Do you really want ot remove it? [yes/no]:"
+                    read VENV_RM
+                    case $VENV_RM in
+                        y|yes)
+                            venv off
+                            ;;
+                        n|no)
+                            continue
+                            ;;
+                        *)
+                            echo "Wrong choice"
+                            continue
+                            ;;
+                    esac
+                fi
+                rm -r $VENV_HOME/$d &>/dev/null && echo "Virtualenv $d removed"
             done
             ;;
         *)
