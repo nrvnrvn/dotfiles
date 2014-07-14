@@ -14,6 +14,10 @@ function _venv_help {
 
 # God object
 function venv {
+    if [ ! $(command -v virtualenv) ]; then
+        echo "command not found: virtualenv"
+        return 1
+    fi
     [ $VENV_HOME ] || local VENV_HOME=$HOME/.virtualenvs
     local VENV_DIR=$VENV_HOME/${PWD##*/}
     local VENV_PY
@@ -38,6 +42,7 @@ function venv {
                     VENV_PY=python3.4
                     ;;
                 *)
+                    _venv_help
                     return 1
                     ;;
             esac
