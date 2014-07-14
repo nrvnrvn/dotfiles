@@ -54,7 +54,7 @@ function venv {
             [ $VIRTUAL_ENV ] && deactivate
             ;;
         ls)
-            for d in $(ls -d $VENV_HOME/*); do echo $fg[magenta]${d##*/}$reset_color; done
+            for d in $(ls -d $VENV_HOME/*); do echo ${d##*/}; done
             ;;
         rm)
             shift
@@ -69,10 +69,10 @@ function venv {
                         echo "Do you really want ot remove it? [yes/no]:"
                         read VENV_RM
                         case $VENV_RM in
-                            (y(|e(s|p)))
+                            y|yes)
                                 venv off
                                 ;;
-                            (n(|o(|pe)))
+                            n|no)
                                 continue
                                 ;;
                             *)
