@@ -68,7 +68,7 @@ function venv {
                 return 1
             fi
             for d in $*; do
-                if [ -d $VENV_HOME/$d ]; then
+                if [ ! -d $VENV_HOME/$d ]; then
                     echo "No such venv $d"
                     return 1
                 fi
