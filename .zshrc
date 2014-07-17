@@ -5,13 +5,6 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="nicorevin"
 
 # Aliases
-alias pmr='python manage.py runserver'
-alias dfr='diff <(pip freeze) requirements.txt'
-alias plo='pip list -o'
-alias ghp='git push heroku master'
-alias ghr='git pull --rebase heroku master'
-alias pup='yaourt -Syua'
-alias puc='yes|sudo pacman -Scc && sudo localepurge'
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
@@ -22,8 +15,12 @@ DISABLE_AUTO_UPDATE="true"
 plugins=(git heroku npm pip python virtualenv django)
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)
+    alias pup='yaourt -Syua'
+    alias puc='yes|sudo pacman -Scc && sudo localepurge'
 else
     plugins+=(osx brew terminalapp)
+    alias dfr='diff <(pip freeze) requirements.txt'
+    alias plo='pip list -o'
 fi
 
 source $ZSH/oh-my-zsh.sh
