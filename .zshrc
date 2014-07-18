@@ -13,14 +13,14 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git heroku npm pip python virtualenv django)
+alias dfr='diff <(pip freeze) requirements.txt'
+alias plo='pip list -o'
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)
     alias pup='yaourt -Syua'
     alias puc='yes|sudo pacman -Scc && sudo localepurge'
 else
     plugins+=(osx brew terminalapp)
-    alias dfr='diff <(pip freeze) requirements.txt'
-    alias plo='pip list -o'
 fi
 
 source $ZSH/oh-my-zsh.sh
