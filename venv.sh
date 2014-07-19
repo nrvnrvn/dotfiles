@@ -1,15 +1,15 @@
 # Skinny virtualenv wrapper
 function _venv_help {
     echo "Skinny virtualenv wrapper"
-    echo "Usage: venv [command] [args]\n"
+    echo "Usage: venv <command> [args]\n"
     echo "Commands:"
-    echo "  on [2]                  Creates virtualenv under $HOME/.virtualenvs/"
-    echo "                          if it doesn't exist and activates it"
-    echo "                          python3.4 is default. Available options:"
-    echo "                          2.6, 2.7(2), 3.3, 3.4(3)"
-    echo "  off                     Deactivates current virtualenv"
-    echo "  ls                      Lists all virtualenvs"
-    echo "  rm venv [venv] [...]    Removes listed venv/venvs"
+    echo "  on [version]        Creates virtualenv under $HOME/.virtualenvs/"
+    echo "                      if it doesn't exist and activates it."
+    echo "                      python3.4 is default. Available options:"
+    echo "                      2.6, 2.7(2), 3.3, 3.4(3)"
+    echo "  off                 Deactivates current virtualenv"
+    echo "  ls                  Lists all virtualenvs"
+    echo "  rm <venv>...        Removes listed venv/venvs"
 }
 
 # God object
