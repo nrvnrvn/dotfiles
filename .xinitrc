@@ -16,7 +16,7 @@ fi
 export EDITOR=vim
 export BROWSER=chromium
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-# localectl set-x11-keymap us,ru grp:alt_space_toggle,ctrl:nocaps
+# localectl set-x11-keymap "us,ru" "" "" "grp:alt_space_toggle,ctrl:nocaps"
 xset +fp /usr/share/fonts/local
 xset m 6
 
