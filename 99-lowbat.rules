@@ -1,0 +1,8 @@
+# Suspend the system when battery level drops to 4% or lower
+# Put it here /etc/udev/rules.d/99-lowbat.rules:
+# sudo ln -s ~/.dotfiles/99-lowbat.rules /etc/udev/rules.d/
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="4", RUN+="/usr/bin/systemctl suspend"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="3", RUN+="/usr/bin/systemctl suspend"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="2", RUN+="/usr/bin/systemctl suspend"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="1", RUN+="/usr/bin/systemctl suspend"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="0", RUN+="/usr/bin/systemctl suspend"
