@@ -14,6 +14,7 @@ DISABLE_AUTO_UPDATE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git heroku npm pip python virtualenv django)
 alias dfr='diff <(pip freeze) requirements.txt'
+alias frfr='pip freeze > requirements.txt'
 alias plo='pip list -o'
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)
