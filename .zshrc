@@ -16,6 +16,7 @@ plugins=(git heroku npm pip python virtualenv django)
 alias dfr='diff <(pip freeze) requirements.txt'
 alias frfr='pip freeze > requirements.txt'
 alias plo='pip list -o'
+alias tmux='tmux a'
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)
     alias pup='yaourt -Syua'
