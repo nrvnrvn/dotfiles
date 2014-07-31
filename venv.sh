@@ -52,7 +52,7 @@ function venv {
             fi
             [ $VIRTUAL_ENV ] && deactivate
             [ -f $VENV_DIR/bin/activate ] || $(command -v virtualenv) $VENV_DIR -p $VENV_PY
-            [ -f $VENV_FILE ] && [ "$(cat $VENV_FILE)" != $VENV_DIR ] && echo $VENV_DIR > $VENV_FILE
+            [ -f $VENV_FILE ] && [ "$(cat $VENV_FILE)" = $VENV_DIR ] || echo $VENV_DIR > $VENV_FILE
             source $VENV_DIR/bin/activate
             ;;
         off)
