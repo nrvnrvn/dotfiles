@@ -20,7 +20,6 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 xset +fp /usr/share/fonts/local
 xset m 6
 
-feh --bg-fill .wallpaper.image
+feh --bg-fill $HOME/.wallpaper.image
 compton -bfzcCG --backend glx --vsync opengl-swc --paint-on-overlay -D5 -r10 -l-14 -t-13
 $HOME/.statusbar &
-exec dwm
