@@ -19,8 +19,9 @@ function venv {
         return 1
     fi
     [ $VENV_HOME ] || local VENV_HOME=$HOME/.virtualenvs
+    [ $VENV_SFX ] || local VENV_SFX='_PY34'
+    [ $VENV_PY ] || local VENV_PY=python3.4
     local VENV_DIR=$VENV_HOME/${PWD##*/}
-    local VENV_PY
     local VENV_FILE=.venv
     case $1 in
         on)
@@ -29,7 +30,7 @@ function venv {
                     VENV_DIR+='_PY26'
                     VENV_PY=python2.6
                     ;;
-                (2|2.7)
+                2|2.7)
                     VENV_DIR+='_PY27'
                     VENV_PY=python2.7
                     ;;
@@ -37,9 +38,12 @@ function venv {
                     VENV_DIR+='_PY33'
                     VENV_PY=python3.3
                     ;;
-                (''|3|3.4)
+                3|3.4)
                     VENV_DIR+='_PY34'
                     VENV_PY=python3.4
+                    ;;
+                '')
+                    VENV_DIR+=$VENV_SFX
                     ;;
                 *)
                     _venv_help
