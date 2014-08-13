@@ -25,6 +25,21 @@ function venv {
     local VENV_FILE=.venv
     case $1 in
         on)
+            local VENV_SEARCH_ROOT=$PWD
+            while [ $VENV_SEARCH_ROOT ]; do
+                if [ -f $VENV_SEARCH_ROOT/$VENV_FILE ]; then
+                    VENV_DIR=$VENV_HOME/${VENV_SEARCH_ROOT##*/}
+                    VENV_FILE=$VENV_SEARCH_ROOT/$VENV_FILE
+                    # if [[ "$(cat $VENV_SEARCH_ROOT/$VENV_FILE)" = $VENV_HOME* ]]; then
+                    #     if [[ "$(cat $VENV_SEARCH_ROOT/$VENV_FILE)" = *$VENV_SFX ]]; then
+                    #         VENV_DIR=$(cat $VENV_SEARCH_ROOT/$VENV_FILE)
+                    #         break
+                    #     fi
+                    # fi
+                    break
+                fi
+                VENV_SEARCH_ROOT=${VENV_SEARCH_ROOT%/*}
+            done
             case $2 in
                 2.6)
                     VENV_DIR+='_PY26'
@@ -55,19 +70,6 @@ function venv {
                 return 1
             fi
             [ $VIRTUAL_ENV ] && deactivate
-            local VENV_SEARCH_ROOT=$PWD
-            while [ $VENV_SEARCH_ROOT ]; do
-                if [ -f $VENV_SEARCH_ROOT/$VENV_FILE ]; then
-                    if [[ "$(cat $VENV_SEARCH_ROOT/$VENV_FILE)" = $VENV_HOME* ]]; then
-                        if [[ "$(cat $VENV_SEARCH_ROOT/$VENV_FILE)" = *$VENV_SFX ]]; then
-                            VENV_DIR=$(cat $VENV_SEARCH_ROOT/$VENV_FILE)
-                            break
-                        fi
-                    fi
-                fi
-                VENV_SEARCH_ROOT=${VENV_SEARCH_ROOT%/*}
-            done
-            VENV_FILE=$VENV_SEARCH_ROOT/$VENV_FILE
             [ -f $VENV_DIR/bin/activate ] || $(command -v virtualenv) $VENV_DIR -p $VENV_PY
             [ -f $VENV_FILE ] && [ "$(cat $VENV_FILE)" = $VENV_DIR ] || echo $VENV_DIR > $VENV_FILE
             source $VENV_DIR/bin/activate
