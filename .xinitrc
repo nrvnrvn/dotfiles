@@ -19,8 +19,8 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export GOPATH="$HOME/.go"
 export PATH="$PATH:$GOPATH/bin"
 # localectl set-x11-keymap "us,ru" "" "" "grp:alt_space_toggle,ctrl:nocaps"
-xset m 6
 
+xrandr --output DVI-0 --auto --output DVI-1 --auto --right-of DVI-0
 feh --bg-fill $HOME/.wallpaper.png
 compton -fzcCG --backend glx --paint-on-overlay -D5 -r10 -l-14 -t-13 &
 $HOME/.statusbar &

@@ -1,5 +1,5 @@
 while [ "$(sleep 5s; pgrep dwm)" ]; do
-    batt=$(LC_ALL=C acpi -b)
+    [ $(command -v acpi) ] && batt=$(LC_ALL=C acpi -b)
     datetime=$(date +"%d.%m %R")
         case $batt in
         *Discharging*)
