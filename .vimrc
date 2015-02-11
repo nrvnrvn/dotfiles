@@ -14,6 +14,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/nerdtree'
 " Track the engine.
 Plugin 'SirVer/ultisnips'
 Plugin 'nginx.vim'
@@ -46,13 +47,27 @@ set showcmd
 set cursorline
 set ruler
 set t_Co=16
+hi Folded ctermfg=10
+let g:solarized_termcolors=16
 colorscheme solarized
 set background=dark
 set backspace=indent,eol,start
 "new settings go heere
+" Search
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+
+" airline
 set laststatus=2
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+
+" python-mode
+let g:pymode_rope = 1
+let g:pymode_lint = 1
+let g:pymode_virtualenv = 1
+let g:pymode_folding = 0
+
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -62,3 +77,5 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre *.py :call pymode#rope#organize_imports()
