@@ -9,6 +9,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'fatih/vim-go'
 Plugin 'klen/python-mode'
+Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
@@ -40,6 +41,7 @@ set textwidth=79
 set colorcolumn=80
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 set expandtab
 set autoindent
 set number
@@ -67,6 +69,8 @@ let g:pymode_rope = 1
 let g:pymode_lint = 1
 let g:pymode_virtualenv = 1
 let g:pymode_folding = 0
+let g:pymode_indent = 0
+let g:pymode_rope_completion = 0
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -77,5 +81,8 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufWritePre *.py :call pymode#rope#organize_imports()
+
+" NERDTree
+let NERDTreeIgnore = ['\.pyc$', '__pycache__$', '\.egg-info$']
+
+autocmd BufWritePost * :%s/\s\+$//e

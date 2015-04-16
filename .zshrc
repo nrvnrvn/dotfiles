@@ -12,9 +12,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git heroku npm pip python virtualenv django)
-alias dfr='diff <(pip freeze) requirements.txt'
-alias frfr='pip freeze > requirements.txt'
+plugins=(git heroku npm pip python virtualenv golang)
 alias plo='pip list -o'
 alias tmux='tmux a'
 if [[ $(uname) == "Linux" ]]; then
