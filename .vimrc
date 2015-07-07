@@ -11,11 +11,11 @@ Plugin 'fatih/vim-go'
 Plugin 'klen/python-mode'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'chase/vim-ansible-yaml'
 " Track the engine.
 Plugin 'SirVer/ultisnips'
 Plugin 'nginx.vim'
@@ -52,7 +52,7 @@ set t_Co=16
 hi Folded ctermfg=10
 let g:solarized_termcolors=16
 colorscheme solarized
-set background=dark
+set background=light
 set backspace=indent,eol,start
 "new settings go heere
 " Search
@@ -66,12 +66,11 @@ let g:airline_right_sep=''
 let g:airline#extensions#tabline#enabled = 1
 
 " python-mode
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 let g:pymode_lint = 1
 let g:pymode_virtualenv = 1
 let g:pymode_folding = 0
 let g:pymode_indent = 0
-let g:pymode_rope_completion = 0
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
