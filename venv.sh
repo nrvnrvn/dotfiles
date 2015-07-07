@@ -108,7 +108,7 @@ function venv {
                             ;;
                     esac
                 fi
-                rm -r $VENV_HOME/$d &>/dev/null && echo "Virtualenv $d removed"
+                rm -rf $VENV_HOME/$d &>/dev/null && echo "Virtualenv $d removed"
             done
             ;;
         *)
