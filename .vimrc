@@ -6,20 +6,18 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'fatih/vim-go'
-Plugin 'klen/python-mode'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'bling/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'chase/vim-ansible-yaml'
-" Track the engine.
 Plugin 'SirVer/ultisnips'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'bling/vim-airline'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'fatih/vim-go'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'klen/python-mode'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'nginx.vim'
-" Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
@@ -52,12 +50,18 @@ set t_Co=16
 hi Folded ctermfg=10
 let g:solarized_termcolors=16
 colorscheme solarized
-set background=light
+set background=dark
 set backspace=indent,eol,start
 "new settings go heere
 " Search
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " airline
 set laststatus=2
@@ -75,6 +79,7 @@ let g:pymode_indent = 0
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+nnoremap <leader>jj :YcmCompleter GoTo<CR>
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
