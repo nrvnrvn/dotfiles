@@ -6,7 +6,7 @@ function _venv_help {
     echo "  on [version]        Creates virtualenv under $HOME/.virtualenvs/"
     echo "                      if it doesn't exist and activates it."
     echo "                      python3.4 is default. Available options:"
-    echo "                      2.6, 2.7(2), 3.3, 3.4(3)"
+    echo "                      2.6, 2.7(2), 3.3, 3.5(3)"
     echo "  off                 Deactivates current virtualenv"
     echo "  ls                  Lists all virtualenvs"
     echo "  rm <venv>...        Removes listed venv/venvs"
@@ -19,8 +19,8 @@ function venv {
         return 1
     fi
     [ $VENV_HOME ] || local VENV_HOME=$HOME/.virtualenvs
-    [ $VENV_SFX ] || local VENV_SFX='_PY34'
-    [ $VENV_PY ] || local VENV_PY=python3.4
+    [ $VENV_SFX ] || local VENV_SFX='_PY35'
+    [ $VENV_PY ] || local VENV_PY=python3.5
     local VENV_DIR=$VENV_HOME/${PWD##*/}
     local VENV_FILE=.venv
     case $1 in
@@ -53,9 +53,13 @@ function venv {
                     VENV_DIR+='_PY33'
                     VENV_PY=python3.3
                     ;;
-                3|3.4)
+                3.4)
                     VENV_DIR+='_PY34'
                     VENV_PY=python3.4
+                    ;;
+                3|3.5)
+                    VENV_DIR+='_PY34'
+                    VENV_PY=python3.5
                     ;;
                 '')
                     VENV_DIR+=$VENV_SFX

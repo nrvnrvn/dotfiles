@@ -7,7 +7,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
@@ -76,8 +77,8 @@ let g:pymode_folding = 0
 let g:pymode_indent = 0
 
 " make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+" let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 nnoremap <leader>jj :YcmCompleter GoTo<CR>
 
 " better key bindings for UltiSnipsExpandTrigger
