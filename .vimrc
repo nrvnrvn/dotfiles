@@ -60,8 +60,10 @@ colorscheme solarized
 set background=dark
 
 " Search
-set incsearch           " search as characters are entered
-set hlsearch            " highlight matches
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
 
 " Key mappings
 set backspace=indent,eol,start
