@@ -7,11 +7,12 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'jiangmiao/auto-pairs'
 "Plugin 'davidhalter/jedi-vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
 Plugin 'hynek/vim-python-pep8-indent'

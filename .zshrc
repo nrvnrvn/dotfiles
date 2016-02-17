@@ -13,13 +13,14 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git heroku npm pip python virtualenv golang)
+plugins=(git heroku npm pip python virtualenv golang docker)
 alias plo='pip list -o'
-alias tmux='tmux a'
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)
+    alias yaourt='yaourt --noconfirm'
     alias pup='yaourt -Syua'
-    alias puc='yes|sudo pacman -Scc && sudo localepurge'
+    alias puc='yes|sudo pacman -Scc && sudo localepurge-config && sudo localepurge'
+    alias ssh='ssh-add -l > /dev/null || ssh-add && unalias ssh; ssh'
 else
     plugins+=(osx brew terminalapp)
 fi
@@ -30,8 +31,8 @@ source $HOME/.dotfiles/venv.sh
 
 # User configuration
 
-export GOPATH="$HOME/.go"
-export PATH=$GOPATH/bin:$HOME/bin:/usr/local/bin:$PATH
+export GOPATH="$HOME/go"
+export PATH=$PATH:$GOPATH/bin
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
