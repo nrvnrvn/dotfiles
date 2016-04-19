@@ -5,7 +5,7 @@ let g:python3_host_prog = $HOME.'/.virtualenvs/neovim_PY35/bin/python'
 " Vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'Shougo/deoplete.nvim' | Plug 'zchee/deoplete-go', {'for': 'go'}
+Plug 'Shougo/deoplete.nvim' | Plug 'zchee/deoplete-go', {'for': 'go', 'do': 'make'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
@@ -13,23 +13,25 @@ Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "Plug 'chase/vim-ansible-yaml'
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
-Plug 'lepture/vim-velocity' 
+Plug 'lepture/vim-velocity'
 Plug 'fatih/vim-go'
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'klen/python-mode', {'for': 'python'}
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-"Plug 'nginx.vim'
+Plug 'edkolev/tmuxline.vim'
 
 call plug#end()
 filetype plugin indent on    " required
 syntax enable
+set lz
+set cb=unnamed
 
 " Appearance
 autocmd FileType python setlocal colorcolumn=80 tabstop=4 softtabstop=4 shiftwidth=4
 set expandtab
 set number
-set showmatch
+"set showmatch
 
 " Color
 hi Folded ctermfg=10
@@ -54,6 +56,20 @@ nnoremap E $
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 
+" Tmuxline
+let g:tmuxline_preset = {
+      \'a'    : '#I',
+      \'b'    : '',
+      \'c'    : '',
+      \'win'  : '#I #W#F',
+      \'cwin' : '#I #W#F',
+      \'x'    : '',
+      \'y'    : '%Y-%m-%d %R',
+      \'z'    : '#h'}
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+
 " Python-mode
 let g:pymode_folding = 0
 let g:pymode_indent = 0
@@ -73,7 +89,6 @@ let g:pymode_virtualenv = 1
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:neocomplete#enable_at_startup = 1
 
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', '__pycache__$', '\.egg-info$']
