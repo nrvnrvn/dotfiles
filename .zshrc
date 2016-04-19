@@ -27,7 +27,7 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-source $HOME/.dotfiles/venv.sh
+source $HOME/.venv.sh
 
 # User configuration
 
