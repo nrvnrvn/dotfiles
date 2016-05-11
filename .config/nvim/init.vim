@@ -28,7 +28,10 @@ set lz
 set cb=unnamed
 
 " Appearance
-autocmd FileType python setlocal colorcolumn=80 tabstop=4 softtabstop=4 shiftwidth=4
+autocmd FileType python setlocal colorcolumn=80 
+set tabstop=4 
+set softtabstop=4 
+set shiftwidth=4
 set expandtab
 set number
 "set showmatch
@@ -64,8 +67,8 @@ let g:tmuxline_preset = {
       \'win'  : '#I #W#F',
       \'cwin' : '#I #W#F',
       \'x'    : '',
-      \'y'    : '%Y-%m-%d %R',
-      \'z'    : '#h'}
+      \'y'    : '',
+      \'z'    : '%Y-%m-%d %R'}
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1

@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-export EDITOR=vim
+export EDITOR=nvim
 
 # Theme
 ZSH_THEME="nicorevin"
@@ -17,10 +17,8 @@ plugins=(git heroku npm pip python virtualenv golang docker)
 alias plo='pip list -o'
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)
-    alias yaourt='yaourt --noconfirm'
     alias pup='yaourt -Syua'
     alias puc='yes|sudo pacman -Scc && sudo localepurge-config && sudo localepurge'
-    alias ssh='ssh-add -l > /dev/null || ssh-add && unalias ssh; ssh'
 else
     plugins+=(osx brew terminalapp)
 fi
