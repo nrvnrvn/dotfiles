@@ -20,6 +20,7 @@ Plug 'klen/python-mode', {'for': 'python'}
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'edkolev/tmuxline.vim'
+Plug 'bronson/vim-trailing-whitespace'
 
 call plug#end()
 filetype plugin indent on    " required
@@ -28,9 +29,9 @@ set lz
 set cb=unnamed
 
 " Appearance
-autocmd FileType python setlocal colorcolumn=80 
-set tabstop=4 
-set softtabstop=4 
+autocmd FileType python setlocal colorcolumn=80
+set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 set number
@@ -97,4 +98,4 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let NERDTreeIgnore = ['\.pyc$', '__pycache__$', '\.egg-info$']
 
 " Trim whitespace
-autocmd BufWritePost * :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
