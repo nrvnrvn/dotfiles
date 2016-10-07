@@ -22,7 +22,7 @@ function venv {
     [ $VENV_SFX ] || local VENV_SFX='_PY35'
     [ $VENV_PY ] || local VENV_PY=python3.5
     local VENV_DIR=$VENV_HOME/${PWD##*/}
-    local VENV_FILE=.venv
+    local VENV_FILE=.env
     case $1 in
         on)
             local VENV_SEARCH_ROOT=$PWD
