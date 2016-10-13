@@ -5,7 +5,8 @@ let g:python3_host_prog = $HOME.'/.virtualenvs/neovim_PY35/bin/python'
 " Vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'Shougo/deoplete.nvim' | Plug 'zchee/deoplete-go', {'for': 'go', 'do': 'make'}
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'zchee/deoplete-go', {'for': 'go', 'do': 'make'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
@@ -14,7 +15,7 @@ Plug 'vim-airline/vim-airline-themes'
 "Plug 'chase/vim-ansible-yaml'
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'lepture/vim-velocity'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 Plug 'klen/python-mode', {'for': 'python'}
 Plug 'scrooloose/nerdtree'
