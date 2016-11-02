@@ -4,24 +4,25 @@ let g:python3_host_prog = $HOME.'/.virtualenvs/neovim_PY35/bin/python'
 
 " Vim-plug
 call plug#begin('~/.vim/plugged')
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'chase/vim-ansible-yaml'
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'zchee/deoplete-go', {'for': 'go', 'do': 'make'}
-Plug 'jiangmiao/auto-pairs'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-"Plug 'chase/vim-ansible-yaml'
+Plug 'bronson/vim-trailing-whitespace'
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
-Plug 'lepture/vim-velocity'
+Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', {'for': 'go'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+Plug 'jiangmiao/auto-pairs'
 Plug 'klen/python-mode', {'for': 'python'}
+Plug 'lepture/vim-velocity'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'edkolev/tmuxline.vim'
-Plug 'bronson/vim-trailing-whitespace'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'zchee/deoplete-go', {'for': 'go', 'do': 'make'}
 
 call plug#end()
 filetype plugin indent on    " required
