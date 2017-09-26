@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-export EDITOR=nvim
+export EDITOR=vim
 
 # Theme
 ZSH_THEME="nicorevin"
@@ -13,7 +13,7 @@ ZSH_THEME="nicorevin"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git heroku npm pip python virtualenv golang docker)
+plugins=(git npm pip python virtualenv golang docker kubectl)
 alias plo='pip list -o'
 if [[ $(uname) == "Linux" ]]; then
     plugins+=(archlinux systemd)

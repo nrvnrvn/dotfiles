@@ -19,8 +19,8 @@ function venv {
         return 1
     fi
     [ $VENV_HOME ] || local VENV_HOME=$HOME/.virtualenvs
-    [ $VENV_SFX ] || local VENV_SFX='_PY35'
-    [ $VENV_PY ] || local VENV_PY=python3.5
+    [ $VENV_SFX ] || local VENV_SFX='_PY36'
+    [ $VENV_PY ] || local VENV_PY=python3.6
     local VENV_DIR=$VENV_HOME/${PWD##*/}
     local VENV_FILE=.env
     case $1 in
