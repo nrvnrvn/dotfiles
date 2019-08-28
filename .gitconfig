@@ -1,0 +1,18 @@
+[user]
+	name = Nick Revin
+	email = n@nrvn.cc
+	signingkey = 2825CB67124D42D6
+[http]
+	postBuffer = 157286400
+[core]
+	excludesfile = /Users/nicorevin/.gitignore_global
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+[fetch]
+	prune = true
+[format]
+	signoff = true
+[push]
+	default = current
