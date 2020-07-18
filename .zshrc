@@ -1,176 +1,192 @@
-###############################################################################
-# AUTOLOADS
-autoload -Uz compaudit
-autoload -Uz compinit
-autoload -Uz up-line-or-beginning-search
-autoload -Uz down-line-or-beginning-search
-autoload -Uz vcs_info
-###############################################################################
-# BINDINGS AND IMPORTS
-bindkey -e
-# enable fzf key bindings
-[ -f ${HOME}/.fzf.zsh ] && source ${HOME}/.fzf.zsh
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/nicorevin/.google/google-cloud-sdk/path.zsh.inc' ]; then
-    source '/Users/nicorevin/.google/google-cloud-sdk/path.zsh.inc'
+#!/usr/bin/env zsh
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-###############################################################################
-# VARIABLES
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export EDITOR=vim
-export LESS=-R
-#export GOPATH="${HOME}/go"
-export PATH=/usr/local/sbin:${HOME}/go/bin:$PATH
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
-###############################################################################
-# ALIASES
-alias k='kubectl'
-alias ls='ls -G'
-alias ll='ls -Glh'
-alias lla='ls -lha'
 
-alias grep='grep --color=auto --exclude-dir=.git'
+alias \
+    ga='git add' \
+    gc='git commit -S -s' \
+    gcm='git commit -S -s -m' \
+    gd='git diff' \
+    gfa='git fetch --all --prune' \
+    gl='git pull' \
+    gp='git push' \
+    grep='grep --color=auto --exclude-dir=.git' \
+    gss='git status -s' \
+    k='kubectl' \
+    ll='ls -Glh' \
+    lla='ls -Glha' \
+    ls='ls -G'
 
-alias ga='git add'
-alias gc='git commit -S -s'
-alias gcm='git commit -S -s -m'
-alias gd='git diff'
-alias gfa='git fetch --all --prune'
-alias gl='git pull'
-alias gp='git push'
-alias gss='git status -s'
-###############################################################################
-# HISTORY
-export HISTFILE="${HOME}/.zsh_history"
-export HISTSIZE=999999
-export SAVEHIST=$HISTSIZE
+export \
+    CLICOLOR=1 \
+    EDITOR=vim \
+    GPG_TTY=$TTY \
+    GREP_COLOR='1;33' \
+    HISTSIZE=999999 \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    LESS=-R \
+    LSCOLORS="ExfxcxdxbxGxDxabagacad" \
+    PAGER=less \
+    PATH=/usr/local/sbin:${HOME}/go/bin:$PATH \
+    SAVEHIST=999999 \
+    WORDCHARS=''
 
-setopt extended_history       # record timestamp of command in HISTFILE
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_reduce_blanks     # remove superfluous blanks from history items
-setopt hist_verify            # show command with history expansion to user before running it
-setopt inc_append_history     # add commands to HISTFILE in order of execution
-setopt share_history          # share command history data
+# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Widgets
+autoload -U \
+    add-zsh-hook \
+    bracketed-paste-url-magic \
+    compaudit \
+    compinit \
+    down-line-or-beginning-search \
+    up-line-or-beginning-search \
+    url-quote-magic \
+    zrecompile
 
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
-###############################################################################
-# COMPLETION
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${HOME}/.zcompdump) ]; then
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Description-of-Options
+setopt \
+    always_to_end \
+    auto_cd \
+    auto_list \
+    auto_menu \
+    auto_param_slash \
+    complete_in_word \
+    extended_glob \
+    extended_history \
+    hist_expire_dups_first \
+    hist_ignore_dups \
+    hist_ignore_space \
+    hist_reduce_blanks \
+    hist_verify \
+    inc_append_history \
+    interactive_comments \
+    share_history
+
+function _init_gpg_agent {
+    local -r gpg_agent_sock=$(gpgconf --list-dirs | grep agent-socket | cut -d : -f 2)
+    local -r gpg_config="${GNUPGHOME:-"${HOME}/.gnupg"}/gpg-agent.conf"
+
+    if [[ ! -S ${gpg_agent_sock} ]]; then
+        gpg-agent --daemon --use-standard-socket &>/dev/null
+    fi
+
+    # Set SSH to use gpg-agent if it's enabled
+    if [[ -r ${gpg_config} ]] && command grep -q enable-ssh-support "${gpg_config}"; then
+        export SSH_AUTH_SOCK="${gpg_agent_sock}.ssh"
+        unset SSH_AGENT_PID
+    fi
+}
+
+function refresh_completions {
     compinit
-else
-    compinit -C
-fi
+    touch "${HOME}/.zcompdump"
+    # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Recompiling-Functions
+    zrecompile -pq "${HOME}/.zcompdump" -- "${HOME}/.zshrc"
+}
 
-# Execute code in the background to not affect the current session
-{
-    # Compile zcompdump, if modified, to increase startup speed.
-    local ZCOMPDUMP="${HOME}/.zcompdump"
-    if [[ -s "${ZCOMPDUMP}" && (! -s "${zcompdump}.zwc" || "${ZCOMPDUMP}" -nt "${ZCOMPDUMP}.zwc") ]]; then
-        zcompile "${ZCOMPDUMP}"
+# Load and initialize the completion system ignoring insecure directories with a
+# cache time of 23 hours, so it should almost always regenerate the first time a
+# shell is opened each day.
+function _setup_completion {
+    if [[ "${HOME}/.zcompdump"(#qNmh-23) ]]; then
+        compinit -C
+    else
+        refresh_completions
     fi
-} &!
 
-setopt auto_menu
-setopt auto_cd
-setopt interactivecomments
-
-zstyle ':completion:*' menu select
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ${HOME}/.zsh_cache
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' special-dirs true
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' group-name ''
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/nicorevin/.google/google-cloud-sdk/completion.zsh.inc' ]; then
-    source '/Users/nicorevin/.google/google-cloud-sdk/completion.zsh.inc'
-fi
-###############################################################################
-# GPG AGENT
-AGENT_SOCK=$(gpgconf --list-dirs | grep agent-socket | cut -d : -f 2)
-
-if [[ ! -S ${AGENT_SOCK} ]]; then
-    gpg-agent --daemon --use-standard-socket &>/dev/null
-fi
-export GPG_TTY=$TTY
-
-# Set SSH to use gpg-agent if it's enabled
-GNUPGCONFIG="${GNUPGHOME:-"${HOME}/.gnupg"}/gpg-agent.conf"
-if [[ -r ${GNUPGCONFIG} ]] && command grep -q enable-ssh-support "${GNUPGCONFIG}"; then
-    export SSH_AUTH_SOCK="${AGENT_SOCK}.ssh"
-    unset SSH_AGENT_PID
-fi
-###############################################################################
-# TAB AND WINDOWS TITLE
-function update_tab_precmd {
-    local TAB_TITLE="%~"
-    print -Pn "\e]1;$TAB_TITLE:q\a"
-    print -Pn "\e]2;$TAB_TITLE:q\a"
+    zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
+    zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
+    zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+    zstyle ':completion:*:*:*:*:*' menu select
+    zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+    zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+    zstyle ':completion:*:approximate:*' max-errors 1 numeric
+    zstyle ':completion:*:corrections' format '%f -- %F{green}%d (errors: %e)%f --'
+    zstyle ':completion:*:default' list-colors ${(s.:.):-di=1;34:ln=35:so=32:pi=33:ex=31:bd=1;36:cd=1;33:su=30;41:sg=30;46:tw=30;42:ow=30;43}
+    zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+    zstyle ':completion:*:descriptions' format '%f -- %F{yellow}%d%f --'
+    zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
+    zstyle ':completion:*:history-words' list false
+    zstyle ':completion:*:history-words' menu yes
+    zstyle ':completion:*:history-words' remove-all-dups yes
+    zstyle ':completion:*:history-words' stop yes
+    zstyle ':completion:*:match:*' original only
+    zstyle ':completion:*:matches' group yes
+    zstyle ':completion:*:messages' format '%f  -- %F{purple}%d%f --'
+    zstyle ':completion:*:options' auto-description '%d'
+    zstyle ':completion:*:options' description yes
+    zstyle ':completion:*:warnings' format ' %f-- %F{red}no matches found%f --'
+    zstyle ':completion:*' accept-exact '*(N)'
+    zstyle ':completion:*' completer _complete _match _approximate
+    zstyle ':completion:*' format '%f -- %F{yellow}%d%f --'
+    zstyle ':completion:*' group-name ''
+    zstyle ':completion:*' squeeze-slashes true
+    zstyle ':completion:*' use-cache yes
+    zstyle ':completion:*' verbose yes
 }
 
-function update_tab_preexec {
-    setopt extended_glob
-    local TAB_TITLE=${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}
-    print -Pn "\e]1;$TAB_TITLE:q\a"
-}
+# Shorten path to fit into a tab size
+# no rocket science for speed purposes.
+function _set_term_title {
+    local -r dir="${PWD/#$HOME/~}"
+    local -r dir_tree=(${(s:/:)dir})
 
-precmd_functions+=(update_tab_precmd)
-preexec_functions+=(update_tab_preexec)
-###############################################################################
-# PROMPT
+    printf '\e]2;%s\a' "${dir}" # set window name
 
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:*' max-exports 1
-zstyle ':vcs_info:git*' formats '%F{green}%b%f'
-zstyle ':vcs_info:git*' actionformats '%F{yellow}%b%f:%F{red}%a%f'
-
-function git_prompt {
-    vcs_info
-    echo "%F{yellow}$vcs_info_msg_0_%f "
-}
-
-function gcloud_prompt {
-    echo "%F{magenta}$(awk '/project/ {print $3}' ${HOME}/.config/gcloud/configurations/config_default < /dev/null)%f "
-}
-
-function kube_prompt {
-    echo "%F{blue}$(awk '/current-context/ {print $2}' ${HOME}/.kube/config < /dev/null)%f:%F{blue}$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)%f "
-}
-
-ZSH_PROMPT_CACHE_FILE=${TMPDIR}${TERM_SESSION_ID}_ZSH_PROMPT_CACHE
-
-function update_lazy_prompt {
-    local res="$(git_prompt)$(gcloud_prompt)$(kube_prompt)"
-    echo -n ${res} > ${ZSH_PROMPT_CACHE_FILE}
-}
-
-function lazy_prompt {
-    if [ ! -f ${ZSH_PROMPT_CACHE_FILE} ]; then
-        update_lazy_prompt
+    # don't shorten path if it is shorter than 25 chars
+    if [[ 25 -gt ${#dir} ]]; then
+        printf '\e]1;%s\a' "${dir}" # set tab name
+        return 0
     fi
-    cat ${ZSH_PROMPT_CACHE_FILE}
-}
 
-#
-# Update prompt
-TMOUT=5
-function TRAPALRM {
-    if [[ ${WIDGET} != *"complet"* && ${WIDGET} != *"beginning-search" ]]; then
-        update_lazy_prompt &!
-        zle reset-prompt
+    if [[ "~" != "${dir_tree[1]}" ]]; then
+        local dir_shortened="/${dir_tree[1]:0:2}"
+    else
+        local dir_shortened="~"
     fi
+
+    for el in "${dir_tree[@]:1:${#dir_tree[@]}-2}"; do
+        dir_shortened+="/${el:0:2}"
+    done
+
+    printf '\e]1;%s\a' "${dir_shortened}/${dir_tree[-1]}" # set tab name
 }
 
-# prompt
-setopt PROMPT_SUBST
-PROMPT='%F{yellow}%T%f %B%F{cyan}%~%f%b $(lazy_prompt)
-%(!.%F{red}#.%(0?.%F{green}.%F{red})$)%f '
+function _setup_input {
+    # http://zsh.sourceforge.net/Guide/zshguide04.html
+    zle -N bracketed-paste bracketed-paste-url-magic
+    zle -N down-line-or-beginning-search
+    zle -N self-insert url-quote-magic
+    zle -N up-line-or-beginning-search
+
+    if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+        function _zl_init { echoti smkx; }
+        function _zl_finish { echoti rmkx; }
+        zle -N zle-line-init _zl_init
+        zle -N zle-line-finish _zl_finish
+    fi
+
+    # http://zsh.sourceforge.net/Intro/intro_11.html
+    bindkey -e \
+        ' ' magic-space \
+        "${terminfo[kcbt]}" reverse-menu-complete \
+        "${terminfo[kcud1]}" down-line-or-beginning-search \
+        "${terminfo[kcuu1]}" up-line-or-beginning-search \
+        "${terminfo[kdch1]}" delete-char
+}
+
+add-zsh-hook precmd _set_term_title
+
+_setup_completion
+_setup_input
+
+source "${HOME}/.powerlevel10k/powerlevel10k.zsh-theme"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
+[[ -f "${HOME}/.fzf.zsh" ]] && source "${HOME}/.fzf.zsh"
