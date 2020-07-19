@@ -25,7 +25,7 @@ alias \
 export \
     CLICOLOR=1 \
     EDITOR=vim \
-    GPG_TTY=$TTY \
+    GPG_TTY="${TTY}" \
     GREP_COLOR='1;33' \
     HISTSIZE=999999 \
     LANG=en_US.UTF-8 \
@@ -33,7 +33,7 @@ export \
     LESS=-R \
     LSCOLORS="ExfxcxdxbxGxDxabagacad" \
     PAGER=less \
-    PATH=/usr/local/sbin:${HOME}/go/bin:$PATH \
+    PATH="${PATH}:/usr/local/opt/fzf/bin:${HOME}/go/bin" \
     SAVEHIST=999999 \
     WORDCHARS=''
 
@@ -67,21 +67,6 @@ setopt \
     interactive_comments \
     share_history
 
-function _init_gpg_agent {
-    local -r gpg_agent_sock=$(gpgconf --list-dirs | grep agent-socket | cut -d : -f 2)
-    local -r gpg_config="${GNUPGHOME:-"${HOME}/.gnupg"}/gpg-agent.conf"
-
-    if [[ ! -S ${gpg_agent_sock} ]]; then
-        gpg-agent --daemon --use-standard-socket &>/dev/null
-    fi
-
-    # Set SSH to use gpg-agent if it's enabled
-    if [[ -r ${gpg_config} ]] && command grep -q enable-ssh-support "${gpg_config}"; then
-        export SSH_AUTH_SOCK="${gpg_agent_sock}.ssh"
-        unset SSH_AGENT_PID
-    fi
-}
-
 function refresh_completions {
     compinit
     touch "${HOME}/.zcompdump"
@@ -99,35 +84,35 @@ function _setup_completion {
         refresh_completions
     fi
 
-    zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
-    zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
-    zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
-    zstyle ':completion:*:*:*:*:*' menu select
-    zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
-    zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
-    zstyle ':completion:*:approximate:*' max-errors 1 numeric
-    zstyle ':completion:*:corrections' format '%f -- %F{green}%d (errors: %e)%f --'
-    zstyle ':completion:*:default' list-colors ${(s.:.):-di=1;34:ln=35:so=32:pi=33:ex=31:bd=1;36:cd=1;33:su=30;41:sg=30;46:tw=30;42:ow=30;43}
-    zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-    zstyle ':completion:*:descriptions' format '%f -- %F{yellow}%d%f --'
-    zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
-    zstyle ':completion:*:history-words' list false
-    zstyle ':completion:*:history-words' menu yes
-    zstyle ':completion:*:history-words' remove-all-dups yes
-    zstyle ':completion:*:history-words' stop yes
-    zstyle ':completion:*:match:*' original only
-    zstyle ':completion:*:matches' group yes
-    zstyle ':completion:*:messages' format '%f  -- %F{purple}%d%f --'
-    zstyle ':completion:*:options' auto-description '%d'
-    zstyle ':completion:*:options' description yes
-    zstyle ':completion:*:warnings' format ' %f-- %F{red}no matches found%f --'
-    zstyle ':completion:*' accept-exact '*(N)'
-    zstyle ':completion:*' completer _complete _match _approximate
-    zstyle ':completion:*' format '%f -- %F{yellow}%d%f --'
-    zstyle ':completion:*' group-name ''
-    zstyle ':completion:*' squeeze-slashes true
-    zstyle ':completion:*' use-cache yes
-    zstyle ':completion:*' verbose yes
+    zstyle -e ':completion:*:approximate:*'         max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
+    zstyle ':completion:*:-tilde-:*'                group-order 'named-directories' 'path-directories' 'users' 'expand'
+    zstyle ':completion:*:*:-subscript-:*'          tag-order indexes parameters
+    zstyle ':completion:*:*:*:*:*'                  menu select
+    zstyle ':completion:*:*:cd:*:directory-stack'   menu yes select
+    zstyle ':completion:*:*:cd:*'                   tag-order local-directories directory-stack path-directories
+    zstyle ':completion:*:approximate:*'            max-errors 1 numeric
+    zstyle ':completion:*:corrections'              format '%f -- %F{green}%d (errors: %e)%f --'
+    zstyle ':completion:*:default'                  list-colors ${(s.:.):-di=1;34:ln=35:so=32:pi=33:ex=31:bd=1;36:cd=1;33:su=30;41:sg=30;46:tw=30;42:ow=30;43}
+    zstyle ':completion:*:default'                  list-prompt '%S%M matches%s'
+    zstyle ':completion:*:descriptions'             format '%f -- %F{yellow}%d%f --'
+    zstyle ':completion:*:functions'                ignored-patterns '(_*|pre(cmd|exec))'
+    zstyle ':completion:*:history-words'            list false
+    zstyle ':completion:*:history-words'            menu yes
+    zstyle ':completion:*:history-words'            remove-all-dups yes
+    zstyle ':completion:*:history-words'            stop yes
+    zstyle ':completion:*:match:*'                  original only
+    zstyle ':completion:*:matches'                  group yes
+    zstyle ':completion:*:messages'                 format '%f  -- %F{purple}%d%f --'
+    zstyle ':completion:*:options'                  auto-description '%d'
+    zstyle ':completion:*:options'                  description yes
+    zstyle ':completion:*:warnings'                 format ' %f-- %F{red}no matches found%f --'
+    zstyle ':completion:*'                          accept-exact '*(N)'
+    zstyle ':completion:*'                          completer _complete _match _approximate
+    zstyle ':completion:*'                          format '%f -- %F{yellow}%d%f --'
+    zstyle ':completion:*'                          group-name ''
+    zstyle ':completion:*'                          squeeze-slashes true
+    zstyle ':completion:*'                          use-cache yes
+    zstyle ':completion:*'                          verbose yes
 }
 
 # Shorten path to fit into a tab size
@@ -180,13 +165,26 @@ function _setup_input {
         "${terminfo[kdch1]}" delete-char
 }
 
+function _setup_fzf {
+    # Auto-completion
+    # ---------------
+    [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+
+    # Key bindings
+    # ------------
+    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+}
+
+function _setup_p10k {
+    source "${HOME}/.powerlevel10k/powerlevel10k.zsh-theme"
+
+    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+    [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
+}
+
 add-zsh-hook precmd _set_term_title
 
 _setup_completion
 _setup_input
-
-source "${HOME}/.powerlevel10k/powerlevel10k.zsh-theme"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
-[[ -f "${HOME}/.fzf.zsh" ]] && source "${HOME}/.fzf.zsh"
+_setup_fzf
+_setup_p10k
