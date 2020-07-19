@@ -149,6 +149,8 @@ function _setup_input {
     zle -N self-insert url-quote-magic
     zle -N up-line-or-beginning-search
 
+    # Make sure that the terminal is in application mode when zle is active, since
+    # only then values from $terminfo are valid
     if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
         function _zl_init { echoti smkx; }
         function _zl_finish { echoti rmkx; }
@@ -157,6 +159,11 @@ function _setup_input {
     fi
 
     # http://zsh.sourceforge.net/Intro/intro_11.html
+    # [Space] - do history expansion
+    # [Shift-Tab] - move through the completion menu backwards
+    # start typing + [Down-Arrow] - fuzzy find history backward
+    # start typing + [Up-Arrow] - fuzzy find history forward
+    # [Delete] - delete forward
     bindkey -e \
         ' ' magic-space \
         "${terminfo[kcbt]}" reverse-menu-complete \
