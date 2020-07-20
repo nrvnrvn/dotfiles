@@ -105,11 +105,12 @@ function _setup_completion {
     zstyle ':completion:*:messages'                 format '%f  -- %F{purple}%d%f --'
     zstyle ':completion:*:options'                  auto-description '%d'
     zstyle ':completion:*:options'                  description yes
-    zstyle ':completion:*:warnings'                 format ' %f-- %F{red}no matches found%f --'
+    zstyle ':completion:*:warnings'                 format '%f -- %F{red}no matches found%f --'
     zstyle ':completion:*'                          accept-exact '*(N)'
     zstyle ':completion:*'                          completer _complete _match _approximate
     zstyle ':completion:*'                          format '%f -- %F{yellow}%d%f --'
     zstyle ':completion:*'                          group-name ''
+    zstyle ':completion:*'                          matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
     zstyle ':completion:*'                          squeeze-slashes true
     zstyle ':completion:*'                          use-cache yes
     zstyle ':completion:*'                          verbose yes
