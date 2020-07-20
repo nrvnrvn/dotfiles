@@ -1,0 +1,4 @@
+[submodule ".p10k"]
+	path = .p10k
+	url = https://github.com/romkatv/powerlevel10k.git
+	shallow = true
