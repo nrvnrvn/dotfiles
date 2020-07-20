@@ -2,3 +2,7 @@
 	path = .p10k
 	url = https://github.com/romkatv/powerlevel10k.git
 	shallow = true
+[submodule ".vim/pack/themes/opt/flattened"]
+	path = .vim/pack/themes/opt/flattened
+	url = https://github.com/romainl/flattened.git
+	shallow = true
