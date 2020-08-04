@@ -1265,7 +1265,9 @@
 	hQ2SDZsNoA2oAAAAAAAAAgEAAAAAAAAAKAAAAAAAAAAAAAAAAAAADas=
 	</data>
 	<key>Bell</key>
-	<false/>
+	<true/>
+	<key>BellBounceCritical</key>
+	<true/>
 	<key>BlinkText</key>
 	<false/>
 	<key>CommandString</key>
@@ -1433,6 +1435,8 @@
 	ADIANwBJAEwAUQBTAFoAYABrAHgAfgCLAKAApwDSAPwA/gEAAQIBCQEOARQBFgEYARoN
 	Zg1rDXYNfw2MDY8NnA2lDaoNsgAAAAAAAAIBAAAAAAAAACgAAAAAAAAAAAAAAAAAAA21
 	</data>
+	<key>SetLanguageEnvironmentVariables</key>
+	<false/>
 	<key>ShowActiveProcessArgumentsInTabTitle</key>
 	<true/>
 	<key>ShowActiveProcessArgumentsInTitle</key>
@@ -1444,7 +1448,7 @@
 	<key>ShowCommandKeyInTitle</key>
 	<false/>
 	<key>ShowComponentsWhenTabHasCustomTitle</key>
-	<false/>
+	<true/>
 	<key>ShowDimensionsInTitle</key>
 	<false/>
 	<key>ShowRepresentedURLInTabTitle</key>
@@ -1609,6 +1613,8 @@
 	<true/>
 	<key>WindowTitle</key>
 	<string></string>
+	<key>columnCount</key>
+	<integer>150</integer>
 	<key>name</key>
 	<string>Solarized Dark</string>
 	<key>noWarnProcesses</key>
@@ -1622,6 +1628,8 @@
 			<string>tmux</string>
 		</dict>
 	</array>
+	<key>rowCount</key>
+	<integer>30</integer>
 	<key>shellExitAction</key>
 	<integer>1</integer>
 	<key>type</key>
