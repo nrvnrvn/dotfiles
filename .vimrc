@@ -18,13 +18,13 @@ set history=10000
 set hlsearch
 set incsearch
 set laststatus=2
-set listchars="tab:> ,trail:-,nbsp:+"
+set listchars="tab:->,trail:•,extends:>,precedes:<,nbsp:+"
 set nrformats="bin,hex"
 set ruler
 set sessionoptions-=options
 set shortmess-=S
 set shortmess+=F
-set showcmd
+set noshowcmd
 set sidescroll=1
 set smarttab
 set nostartofline
@@ -56,23 +56,21 @@ set wildignore+=*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,
 autocmd FileType python setlocal colorcolumn=80
 colorscheme flattened_dark
 set copyindent
-set smarttab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
 set number
+set shiftwidth=2
 set showmatch
+set softtabstop=2
+set tabstop=2
 
 " Key mappings
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
 nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
+nnoremap * *zz
 nnoremap B ^
 nnoremap E $
+nnoremap N Nzz
+nnoremap g# g#zz
+nnoremap g* g*zz
+nnoremap n nzz
 
 " Easy window navigation
 nnoremap <C-h> <C-w>h
@@ -81,10 +79,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Speed up Syntax Highlighting
-augroup vimrc
-   autocmd!
-   autocmd BufWinEnter,Syntax * syn sync minlines=500 maxlines=500
-augroup END
+"augroup vimrc
+"   autocmd!
+"   autocmd BufWinEnter,Syntax * syn sync minlines=500 maxlines=500
+"augroup END
 
 " Autoresize windows
 autocmd VimResized * :wincmd =
