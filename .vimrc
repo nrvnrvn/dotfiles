@@ -9,17 +9,16 @@ set belloff=all
 set backspace=indent,eol,start
 set nocompatible
 set complete-=i
-set display="lastline,msgsep"
+set display=lastline
 set encoding=utf-8
-set fillchars="vert:|,fold:·,sep:│"
 set formatoptions=tcqj
 set nofsync
 set history=10000
 set hlsearch
 set incsearch
 set laststatus=2
-set listchars="tab:->,trail:•,extends:>,precedes:<,nbsp:+"
-set nrformats="bin,hex"
+set listchars=tab:->,trail:•,extends:>,precedes:<,nbsp:+
+set nrformats=bin,hex
 set ruler
 set sessionoptions-=options
 set shortmess-=S
@@ -32,7 +31,6 @@ set tabpagemax=50
 set ttimeoutlen=50
 set ttyfast
 set wildmenu
-set wildoptions="pum,tagfile"
 
 " Some more tuning
 set hidden
@@ -56,6 +54,7 @@ set wildignore+=*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,
 autocmd FileType python setlocal colorcolumn=80
 colorscheme flattened_dark
 set copyindent
+set expandtab
 set number
 set shiftwidth=2
 set showmatch
