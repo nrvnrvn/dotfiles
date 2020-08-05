@@ -1,20 +1,47 @@
-[user]
-	name = Nick Revin
-	email = n@nrvn.cc
-	signingkey = 2825CB67124D42D6
-[http]
-	postBuffer = 157286400
-[core]
-	excludesfile = /Users/nicorevin/.gitignore_global
+[alias]
+	a = add
+	au = add --update
+	c = commit -S -s
+	co = checkout
+	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.gitconfig | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.gitconfig.new && mv ~/.gitconfig.new ~/.gitconfig; }; f"
+	d = diff
+	fap = fetch --all --prune
+	flush = reset --hard HEAD
+	ph = push
+	pl = pull
+	st = status -sb
+[color]
+	ui = auto
 [commit]
 	gpgsign = true
-[gpg]
-	program = gpg
+[core]
+	excludesfile = ~/.gitignore_global
+[diff]
+	tool = vimdiff
 [fetch]
 	prune = true
 [format]
 	signoff = true
-[push]
-	default = current
+[gpg]
+	program = gpg
+[includeIf "gitdir:~/.git"]
+	path = ~/.gitconfig_user_all
+[includeIf "gitdir:~/Projects/"]
+	path = ~/.gitconfig_user_all
+[includeIf "gitdir:~/Work/"]
+	path = ~/.gitconfig_user_work
+[merge]
+	ff = only
 [pull]
 	default = current
+[push]
+	default = current
+	followTags = true
+[rebase]
+	autosquash = true
+[status]
+	submoduleSummary = true
+[transfer]
+	fsckObjects = true
+[user]
+	name = Nick Revin
