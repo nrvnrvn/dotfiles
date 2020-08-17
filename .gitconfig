@@ -1,7 +1,7 @@
 [alias]
 	a = add
 	au = add --update
-	c = commit -S -s
+	c = commit --gpg-sign
 	co = checkout
 	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.gitconfig | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.gitconfig.new && mv ~/.gitconfig.new ~/.gitconfig; }; f"
 	d = diff
@@ -9,7 +9,7 @@
 	flush = reset --hard HEAD
 	ph = push
 	pl = pull
-	st = status -sb
+	st = status --short --branch
 [color]
 	ui = auto
 [commit]
