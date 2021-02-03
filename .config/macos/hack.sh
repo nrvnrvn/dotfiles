@@ -6,3 +6,5 @@ set -o pipefail
 
 # Set location for screenshots to /tmp
 defaults write com.apple.screencapture location /tmp
+
+# git clone --bare git@github.com:nrvnrvn/dotfiles.git $HOME/.config/dotfiles

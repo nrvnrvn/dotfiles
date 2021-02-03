@@ -24,7 +24,7 @@
 	signoff = true
 [gpg]
 	program = gpg
-[includeIf "gitdir:~/.git"]
+[includeIf "gitdir:~/.config/dotfiles"]
 	path = ~/.gitconfig_user_all
 [includeIf "gitdir:~/Projects/"]
 	path = ~/.gitconfig_user_all
