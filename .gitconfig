@@ -34,6 +34,7 @@
 	ff = only
 [pull]
 	default = current
+	ff = only
 [push]
 	default = current
 	followTags = true
