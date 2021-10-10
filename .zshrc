@@ -17,6 +17,7 @@ alias \
   ls='ls -G'
 
 export \
+  GOPATH="${XDG_CACHE_HOME:-$HOME/.go}"
   CLICOLOR=1 \
   EDITOR=vim \
   GITSTATUS_LOG_LEVEL=DEBUG \
@@ -28,7 +29,7 @@ export \
   LESS=-R \
   LSCOLORS="ExfxcxdxbxGxDxabagacad" \
   PAGER=less \
-  PATH="${PATH}:/usr/local/opt/fzf/bin:${HOME}/go/bin" \
+  PATH="${PATH}:/usr/local/opt/fzf/bin" \
   SAVEHIST=999999 \
   WORDCHARS=''
 
