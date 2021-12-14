@@ -52,7 +52,8 @@ set wildignore+=*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,
 
 " Appearance
 autocmd FileType python setlocal colorcolumn=80
-colorscheme flattened_dark
+colorscheme default
+set notermguicolors t_Co=16
 set copyindent
 set expandtab
 set number
