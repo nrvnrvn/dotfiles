@@ -8,7 +8,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 alias \
-  dotfiles='/usr/bin/git --git-dir=$HOME/.config/dotfiles --work-tree=$HOME' \
+  dotfiles='/usr/bin/git --git-dir=${HOME}/.config/dotfiles --work-tree=${HOME}' \
   g=git \
   grep='grep --color=auto --exclude-dir=.git' \
   k=kubectl \
