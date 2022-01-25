@@ -30,6 +30,8 @@
 	path = ~/.gitconfig_user_all
 [includeIf "gitdir:~/Work/"]
 	path = ~/.gitconfig_user_work
+[init]
+	defaultBranch = main
 [merge]
 	ff = only
 [pull]
