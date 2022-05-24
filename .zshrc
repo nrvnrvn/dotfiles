@@ -184,6 +184,13 @@ function _setup_p10k {
   [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
 }
 
+function pdfcompress {
+  local -r input="${1}"
+  local -r output="${2:-$(dirname ${input})/compressed-$(basename ${input})}"
+
+  gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o "${output}" "${input}"
+}
+
 add-zsh-hook precmd _set_term_title
 
 _setup_completion
