@@ -29,7 +29,6 @@ export \
   LESS=-R \
   LSCOLORS="ExfxcxdxbxGxDxabagacad" \
   PAGER=less \
-  PATH="${PATH}:/usr/local/opt/fzf/bin" \
   SAVEHIST=999999 \
   WORDCHARS=''
 
@@ -171,10 +170,10 @@ function _setup_input {
 
 function _setup_fzf {
   # Auto-completion
-  [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+  [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
 
   # Key bindings
-  source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+  source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 }
 
 function _setup_p10k {
@@ -182,6 +181,10 @@ function _setup_p10k {
 
   # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
   [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
+}
+
+function _setup_homebrew {
+    source <(/opt/homebrew/bin/brew shellenv)
 }
 
 function pdfcompress {
@@ -196,4 +199,5 @@ add-zsh-hook precmd _set_term_title
 _setup_completion
 _setup_input
 _setup_fzf
+_setup_homebrew
 _setup_p10k
