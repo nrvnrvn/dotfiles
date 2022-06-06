@@ -3,8 +3,8 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+if [[ -r "${HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 alias \
@@ -17,10 +17,10 @@ alias \
   ls='ls -G'
 
 export \
-  GOPATH="${XDG_CACHE_HOME:-$HOME/.go}"
   CLICOLOR=1 \
   EDITOR=vim \
   GITSTATUS_LOG_LEVEL=DEBUG \
+  GOMODCACHE="${HOME/.cache}/gomod" \
   GPG_TTY="${TTY}" \
   GREP_COLOR='1;33' \
   HISTSIZE=999999 \
