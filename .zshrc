@@ -20,7 +20,7 @@ export \
   CLICOLOR=1 \
   EDITOR=vim \
   GITSTATUS_LOG_LEVEL=DEBUG \
-  GOMODCACHE="${HOME/.cache}/gomod" \
+  GOMODCACHE="${HOME}/.cache/gomod" \
   GPG_TTY="${TTY}" \
   GREP_COLOR='1;33' \
   HISTSIZE=999999 \
