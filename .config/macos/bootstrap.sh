@@ -69,3 +69,4 @@ ensure_brew
 install_brew_dependencies
 ensure_dotfiles
 ensure_theme
+setup_hosts_file
