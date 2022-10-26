@@ -42,6 +42,8 @@ set nowrap
 set title
 set undolevels=1000
 set visualbell
+set mouse=a
+set clipboard=unnamed
 
 " Search
 set ignorecase
@@ -71,6 +73,8 @@ nnoremap N Nzz
 nnoremap g# g#zz
 nnoremap g* g*zz
 nnoremap n nzz
+
+vnoremap p pgvy
 
 " Easy window navigation
 nnoremap <C-h> <C-w>h
