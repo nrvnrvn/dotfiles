@@ -191,8 +191,9 @@ function _setup_homebrew {
 function pdfcompress {
   local -r input="${1}"
   local -r output="${2:-$(dirname ${input})/compressed-$(basename ${input})}"
+  local -r password="${3:-}"
 
-  gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -q -o "${output}" "${input}"
+  gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -sPDFPassword="${password}" -q -o "${output}" "${input}"
 }
 
 add-zsh-hook precmd _set_term_title
