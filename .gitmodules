@@ -2,7 +2,7 @@
 	path = .p10k
 	url = https://github.com/romkatv/powerlevel10k.git
 	shallow = true
-[submodule "/Users/n/.vim/pack/themes/opt/solarized8"]
-	path = /Users/n/.vim/pack/themes/opt/solarized8
+[submodule ".vim/pack/themes/opt/solarized8"]
+	path = .vim/pack/themes/opt/solarized8
 	url = https://github.com/lifepillar/vim-solarized8.git
 	shallow = true
