@@ -1,13 +1,17 @@
 [alias]
 	a = add
-	c = commit --gpg-sign
+	c = commit --verbose
 	co = checkout
+	cob = checkout -b
 	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.gitconfig | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.gitconfig.new && mv ~/.gitconfig.new ~/.gitconfig; }; f"
 	d = diff
+	dc = diff --cached
+	ds = diff --stat
 	fap = fetch --all --prune
 	flush = reset --hard HEAD
-	ph = push
+	ladog = log --all --decorate --oneline --graph
 	pl = pull
+	pu = push
 	st = status --short --branch
 [color]
 	ui = auto
