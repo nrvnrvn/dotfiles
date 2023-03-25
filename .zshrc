@@ -22,6 +22,7 @@ export \
   EDITOR=vim \
   GITSTATUS_LOG_LEVEL=DEBUG \
   GOMODCACHE="${HOME}/.cache/gomod" \
+  GOPATH="${HOME}/.go" \
   GPG_TTY="${TTY}" \
   GREP_COLOR='1;33' \
   HISTSIZE=999999 \
@@ -170,12 +171,8 @@ function _setup_input {
     "${terminfo[kdch1]}" delete-char
 }
 
-function _setup_fzf {
-  # Auto-completion
-  [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
-
-  # Key bindings
-  source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+function _setup_key_bindings {
+  source "/opt/homebrew/share/zsh/site-functions/key-bindings.zsh"
 }
 
 function _setup_p10k {
@@ -201,6 +198,6 @@ add-zsh-hook precmd _set_term_title
 
 _setup_completion
 _setup_input
-_setup_fzf
+_setup_key_bindings
 _setup_homebrew
 _setup_p10k
