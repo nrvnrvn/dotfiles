@@ -19,8 +19,7 @@ alias \
 
 export \
   CLICOLOR=1 \
-  EDITOR=vim \
-  GITSTATUS_LOG_LEVEL=DEBUG \
+  EDITOR=hx \
   GOMODCACHE="${HOME}/.cache/gomod" \
   GOPATH="${HOME}/.go" \
   GPG_TTY="${TTY}" \
