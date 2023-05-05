@@ -3,7 +3,7 @@
 	c = commit --verbose
 	co = checkout
 	cob = checkout -b
-	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.gitconfig | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.gitconfig.new && mv ~/.gitconfig.new ~/.gitconfig; }; f"
+	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.config/git/config | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.config/git/config.new && mv ~/.config/git/config.new ~/.config/git/config; }; f"
 	d = diff
 	dc = diff --cached
 	ds = diff --stat
@@ -18,7 +18,7 @@
 [commit]
 	gpgsign = true
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/ignore_global
 [diff]
 	tool = vimdiff
 [fetch]
@@ -30,7 +30,7 @@
 [gpg]
 	format = ssh
 [include]
-	path = ~/.gitconfig_local
+	path = ~/.config/git/config_local
 [init]
 	defaultBranch = main
 [merge]
