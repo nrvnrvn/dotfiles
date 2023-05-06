@@ -118,6 +118,7 @@ function _setup_completion {
 function _set_term_title {
   local -r dir="${PWD/#$HOME/~}"
   local -r dir_tree=(${(s:/:)dir})
+  local -r max_segment_length=$(( (28 - ${#dir_tree[-1]}) / ${#dir_tree[@]} ))
 
   printf '\e]2;%s\a' "${dir}" # set window name
 
@@ -127,14 +128,20 @@ function _set_term_title {
     return 0
   fi
 
+  if [[ 2 -lt ${max_segment_length} ]]; then
+    local -r segment_length=$(( ${max_segment_length} - 1 ))
+  else
+    local -r segment_length=1
+  fi
+
   if [[ "~" != "${dir_tree[1]}" ]]; then
-    local dir_shortened="/${dir_tree[1]:0:2}"
+    local dir_shortened="/${dir_tree[1]:0:${segment_length}}"
   else
     local dir_shortened="~"
   fi
 
   for el in "${dir_tree[@]:1:${#dir_tree[@]}-2}"; do
-    dir_shortened+="/${el:0:2}"
+    dir_shortened+="/${el:0:${segment_length}}"
   done
 
   printf '\e]1;%s\a' "${dir_shortened}/${dir_tree[-1]}" # set tab name
@@ -182,7 +189,7 @@ function _setup_p10k {
 }
 
 function _setup_homebrew {
-    source <(/opt/homebrew/bin/brew shellenv)
+  source <(/opt/homebrew/bin/brew shellenv)
 }
 
 function pdfcompress {
