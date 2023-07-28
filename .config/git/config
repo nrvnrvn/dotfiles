@@ -21,6 +21,7 @@
 	excludesfile = ~/.config/git/ignore_global
 [diff]
 	tool = vimdiff
+	wsErrorHighlight = all
 [fetch]
 	prune = true
 [format]
