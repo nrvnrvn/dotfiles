@@ -54,6 +54,7 @@ set wildignore+=*.dll,*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,
 
 " Appearance
 autocmd FileType python setlocal colorcolumn=80
+colorscheme nord
 set copyindent
 set expandtab
 set number

@@ -207,7 +207,23 @@ function pdfcompress {
   gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -sPDFPassword="${password}" -q -o "${output}" "${input}"
 }
 
+function _urlencode {
+	local length="${#1}"
+	for (( i = 0; i < length; i++ )); do
+		local c="${1:$i:1}"
+		case $c in
+			%) printf '%%%02X' "'$c" ;;
+			*) printf "%s" "$c" ;;
+		esac
+	done
+}
+
+function osc7_cwd {
+	printf '\033]7;file://%s%s\e\\' "$HOSTNAME" "$(_urlencode "$PWD")"
+}
+
 add-zsh-hook precmd _set_term_title
+add-zsh-hook chpwd osc7_cwd
 
 _setup_completion
 _setup_input
