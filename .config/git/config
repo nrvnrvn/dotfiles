@@ -40,6 +40,7 @@
 	default = current
 	ff = only
 [push]
+	autoSetupRemote = true
 	default = current
 	followTags = true
 [rebase]
