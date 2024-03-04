@@ -4,4 +4,4 @@
 	shallow = true
 [submodule ".vim/pack/themes/opt/nord"]
 	path = .vim/pack/themes/opt/nord
-	url = https://github.com/nrvnrvn/dotfiles.git
+	url = https://github.com/nordtheme/vim.git
