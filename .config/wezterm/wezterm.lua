@@ -16,7 +16,7 @@ config.font = wezterm.font('Iosevka Term Medium')
 config.font_size = 18
 
 -- window and tab appearance
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 config.tab_max_width = 32
 config.use_fancy_tab_bar = false
 

@@ -20,7 +20,7 @@ alias \
 
 export \
   CLICOLOR=1 \
-  EDITOR=hx \
+  EDITOR=vim \
   GOMODCACHE="${HOME}/.cache/gomod" \
   GOPATH="${HOME}/.go" \
   GPG_TTY="${TTY}" \

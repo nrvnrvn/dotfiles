@@ -27,7 +27,6 @@ ensure_brew() {
 install_brew_dependencies() {
   eval "$(/opt/homebrew/bin/brew shellenv)"
   if [[ ! $(brew list --quiet --cask font-iosevka) ]]; then
-    brew tap homebrew/cask-fonts
     brew install --cask font-iosevka
   fi
   brew install fzf

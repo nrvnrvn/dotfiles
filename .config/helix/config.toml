@@ -1,5 +1,0 @@
-theme = "nord"
-
-[editor]
-rulers = [80, 120]
-auto-format = true

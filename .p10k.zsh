@@ -34,8 +34,6 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
-    status                  # exit code of the last command
-    command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
@@ -93,6 +91,8 @@
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     per_directory_history   # Oh My Zsh per-directory-history local/global indicator
     # cpu_arch              # CPU architecture
+    status                  # exit code of the last command
+    command_execution_time  # duration of the last command
     time                    # current time
     # =========================[ Line #2 ]=========================
     newline                 # \n
