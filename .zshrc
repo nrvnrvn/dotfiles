@@ -16,7 +16,8 @@ alias \
   k=kubectl \
   ll='ls -Glh' \
   lla='ls -Glha' \
-  ls='ls -G'
+  ls='ls -G' \
+  prj='cd ~/Projects'
 
 export \
   CLICOLOR=1 \
@@ -28,7 +29,7 @@ export \
   HISTSIZE=999999 \
   LANG=en_US.UTF-8 \
   LC_ALL=en_US.UTF-8 \
-  LESS=-R \
+  LESS=-Ri \
   LSCOLORS="ExfxcxdxbxGxDxabagacad" \
   PAGER=less \
   SAVEHIST=999999 \
