@@ -1,29 +1,36 @@
 [alias]
 	a = add
-	c = commit --verbose
+	c = commit
 	co = checkout
-	cob = checkout -b
 	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.config/git/config | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.config/git/config.new && mv ~/.config/git/config.new ~/.config/git/config; }; f"
 	d = diff
-	dc = diff --cached
-	ds = diff --stat
 	fap = fetch --all --prune
 	flush = reset --hard HEAD
-	ladog = log --all --decorate --oneline --graph
 	pl = pull
 	pu = push
 	st = status --short --branch
+[branch]
+	sort = -committerdate
 [color]
+	ui = auto
+[column]
 	ui = auto
 [commit]
 	gpgsign = true
+	verbose = true
 [core]
 	excludesfile = ~/.config/git/ignore_global
 [diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 	tool = vimdiff
 	wsErrorHighlight = all
 [fetch]
+	all = true
 	prune = true
+	pruneTags = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	process = git-lfs filter-process
@@ -40,20 +47,25 @@
 [init]
 	defaultBranch = main
 [merge]
+	conflictstyle = zdiff3
 	ff = only
 [pull]
 	default = current
 	ff = only
+	rebase = true
 [push]
 	autoSetupRemote = true
 	default = current
 	followTags = true
 [rebase]
-	autosquash = true
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
 [status]
 	submoduleSummary = true
 [tag]
 	gpgsign = true
+	sort = version:refname
 [transfer]
 	fsckObjects = true
 [user]
