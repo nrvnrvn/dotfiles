@@ -17,11 +17,11 @@ alias \
   ll='ls -Glh' \
   lla='ls -Glha' \
   ls='ls -G' \
-  prj='cd ~/Projects'
+  vim=nvim
 
 export \
   CLICOLOR=1 \
-  EDITOR=vim \
+  EDITOR=nvim \
   GOMODCACHE="${HOME}/.cache/gomod" \
   GOPATH="${HOME}/.go" \
   GPG_TTY="${TTY}" \
