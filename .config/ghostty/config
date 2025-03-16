@@ -1,3 +1,5 @@
 theme = "nordfox"
 font-family = "Iosevka Term Medium"
 font-size = 16
+shell-integration-features = no-title
+window-title-font-family = "Iosevka Term Medium"

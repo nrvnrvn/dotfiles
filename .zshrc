@@ -120,13 +120,11 @@ function _setup_completion {
 function _set_term_title {
   local -r dir="${PWD/#$HOME/~}"
   local -r dir_tree=(${(s:/:)dir})
-  local -r max_segment_length=$(( (28 - ${#dir_tree[-1]}) / ${#dir_tree[@]} ))
-
-  printf '\e]2;%s\a' "${dir}" # set window name
+  local -r max_segment_length=$(( (33 - ${#dir_tree[-1]}) / ${#dir_tree[@]} ))
 
   # don't shorten path if it is shorter than 25 chars
-  if [[ 25 -gt ${#dir} ]]; then
-    printf '\e]1;%s\a' "${dir}" # set tab name
+  if [[ 30 -gt ${#dir} ]]; then
+    printf '\e]0;%s\a' "${dir}" # set terminal title
     return 0
   fi
 
@@ -146,8 +144,9 @@ function _set_term_title {
     dir_shortened+="/${el:0:${segment_length}}"
   done
 
-  printf '\e]1;%s\a' "${dir_shortened}/${dir_tree[-1]}" # set tab name
+  printf '\e]0;%s\a' "${dir_shortened}/${dir_tree[-1]}" # set terminal title
 }
+add-zsh-hook precmd _set_term_title
 
 function _setup_input {
   # http://zsh.sourceforge.net/Guide/zshguide04.html
@@ -208,23 +207,6 @@ function pdfcompress {
   gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -sPDFPassword="${password}" -q -o "${output}" "${input}"
 }
 
-function _urlencode {
-	local length="${#1}"
-	for (( i = 0; i < length; i++ )); do
-		local c="${1:$i:1}"
-		case $c in
-			%) printf '%%%02X' "'$c" ;;
-			*) printf "%s" "$c" ;;
-		esac
-	done
-}
-
-function osc7_cwd {
-	printf '\033]7;file://%s%s\e\\' "$HOSTNAME" "$(_urlencode "$PWD")"
-}
-
-add-zsh-hook precmd _set_term_title
-add-zsh-hook chpwd osc7_cwd
 
 _setup_completion
 _setup_input
