@@ -8,7 +8,7 @@ if [[ -r "${HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 fi
 
 alias \
-  brewdauc='brew doctor && brew autoremove && brew upgrade --require-sha && brew cleanup --prune=all -s' \
+  brewdauc='brew doctor && brew autoremove && brew upgrade --require-sha --greedy; brew cleanup --prune=all -s' \
   dotfiles='/usr/bin/git --git-dir=${HOME}/.config/dotfiles --work-tree=${HOME}' \
   g=git \
   grep='grep --color=auto --exclude-dir=.git' \
