@@ -112,7 +112,25 @@ ensure_hosts() {
 }
 
 usage() {
-  echo "Usage: $0 {xcode | dotfiles | brew | terminal | neovim | defaults | hosts}"
+  cat <<EOF
+Bootstrap macOS in an idempotent fashion
+
+Usage:
+  $0 {xcode | dotfiles | brew | terminal | neovim | defaults | hosts | all}
+
+Available commands:
+  xcode      Install and verify Xcode command line tools
+  dotfiles   Clone and set up dotfiles
+  brew       Install Homebrew if not already installed
+  terminal   Install terminal emulator and its dependencies
+  neovim     Set up Neovim with some goodies
+  defaults   Apply preferred macOS system defaults
+  hosts      Update the /etc/hosts file with entries from StevenBlack's list
+  all        Run all of the above in sequence
+
+Example:
+  $0 all
+EOF
 
   exit 1
 }
