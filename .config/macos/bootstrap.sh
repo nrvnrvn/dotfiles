@@ -98,6 +98,24 @@ ensure_defaults() {
   defaults write NSGlobalDomain KeyRepeat -int 2
   defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
+  # Set up firewall
+  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+
+  # Enable automatic updates
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload -bool true
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticallyInstallMacOSUpdates -bool true
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall -bool true
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate ConfigDataInstall -bool true
+  sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool true
+
+  # Set up finder
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+  # Set up screensaver
+  defaults write com.apple.screensaver askForPassword -bool true
+  defaults write com.apple.screensaver askForPasswordDelay -int 0
+
   echo "macOS defaults configured."
 }
 
