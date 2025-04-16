@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -120,7 +118,7 @@ function _setup_completion {
 function _set_term_title {
   local -r dir="${PWD/#$HOME/~}"
   local -r dir_tree=(${(s:/:)dir})
-  local -r max_segment_length=$(( (33 - ${#dir_tree[-1]}) / ${#dir_tree[@]} ))
+  local -r max_segment_length=$(((33 - ${#dir_tree[-1]}) / ${#dir_tree[@]}))
 
   # don't shorten path if it is shorter than 25 chars
   if [[ 30 -gt ${#dir} ]]; then
@@ -129,7 +127,7 @@ function _set_term_title {
   fi
 
   if [[ 2 -lt ${max_segment_length} ]]; then
-    local -r segment_length=$(( ${max_segment_length} - 1 ))
+    local -r segment_length=$((${max_segment_length} - 1))
   else
     local -r segment_length=1
   fi
@@ -146,7 +144,6 @@ function _set_term_title {
 
   printf '\e]0;%s\a' "${dir_shortened}/${dir_tree[-1]}" # set terminal title
 }
-add-zsh-hook precmd _set_term_title
 
 function _setup_input {
   # http://zsh.sourceforge.net/Guide/zshguide04.html
@@ -181,7 +178,7 @@ function _setup_input {
 function _setup_fzf {
   # Auto-completion
   # ---------------
-  [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+  [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2>/dev/null
 
   # Key bindings
   # ------------
@@ -197,7 +194,23 @@ function _setup_p10k {
 
 function _setup_homebrew {
   source <(/opt/homebrew/bin/brew shellenv)
+  if brew list --formula | grep -q '^rustup$'; then
+    local -r RUSTUP_BIN_DIR="$(brew --prefix rustup)/bin"
+
+    if [[ ":${PATH}:" != *:"${RUSTUP_BIN_DIR}":* ]]; then
+      export PATH="${RUSTUP_BIN_DIR}:${PATH}"
+    fi
+  fi
 }
+
+add-zsh-hook precmd _set_term_title
+_setup_completion
+_setup_input
+_setup_fzf
+_setup_homebrew
+_setup_p10k
+
+# handy functions below
 
 function pdfcompress {
   local -r input="${1}"
@@ -206,10 +219,3 @@ function pdfcompress {
 
   gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -sPDFPassword="${password}" -q -o "${output}" "${input}"
 }
-
-
-_setup_completion
-_setup_input
-_setup_fzf
-_setup_homebrew
-_setup_p10k

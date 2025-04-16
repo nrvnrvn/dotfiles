@@ -1,18 +1,13 @@
 return {
-  "stevearc/conform.nvim",
+  "MagicDuck/grug-far.nvim",
   dependencies = {
     {
       "williamboman/mason.nvim",
       opts = {
         ensure_installed = {
-          "prettier",
+          "ast-grep",
         },
       },
-    },
-  },
-  opts = {
-    formatters_by_ft = {
-      html = { "prettier" },
     },
   },
 }
