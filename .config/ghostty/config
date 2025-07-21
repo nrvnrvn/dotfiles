@@ -1,5 +1,6 @@
-theme = "nordfox"
 font-family = "Iosevka Term Medium"
 font-size = 16
 shell-integration-features = no-title
+theme = "nordfox"
+unfocused-split-fill = black
 window-title-font-family = "Iosevka Term Medium"

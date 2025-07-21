@@ -63,7 +63,7 @@ ensure_neovim() {
   local -r python_path="${HOME}/.local/share/nvim-python"
   local -r python_version='3.13'
   local -r node_path="${HOME}/.local/share/nvim-node"
-  local -r node_version='22.14'
+  local -r node_version='24'
 
   echo "Installing Neovim and dependencies..."
   brew install --quiet --require-sha neovim fzf fd ripgrep lazygit wget fnm uv
@@ -74,6 +74,7 @@ ensure_neovim() {
 
   echo "Setting up Node.js environment for Neovim..."
   fnm install --fnm-dir "${node_path}" "${node_version}"
+  fnm exec --fnm-dir "${node_path}" --using "${node_version}" npm update -g
   fnm exec --fnm-dir "${node_path}" --using "${node_version}" npm i -g neovim
 
   echo "Neovim setup complete."

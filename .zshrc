@@ -6,7 +6,7 @@ if [[ -r "${HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 fi
 
 alias \
-  brewdauc='brew doctor && brew autoremove && brew upgrade --require-sha --greedy; brew cleanup --prune=all -s' \
+  brewdauc='brew doctor && brew autoremove && brew upgrade --require-sha --greedy && brew cleanup --prune=all -s' \
   dotfiles='/usr/bin/git --git-dir=${HOME}/.config/dotfiles --work-tree=${HOME}' \
   g=git \
   grep='grep --color=auto --exclude-dir=.git' \
@@ -27,7 +27,7 @@ export \
   HISTSIZE=999999 \
   LANG=en_US.UTF-8 \
   LC_ALL=en_US.UTF-8 \
-  LESS=-Ri \
+  LESS=-RFi \
   LSCOLORS="ExfxcxdxbxGxDxabagacad" \
   PAGER=less \
   SAVEHIST=999999 \
@@ -127,7 +127,7 @@ function _set_term_title {
   fi
 
   if [[ 2 -lt ${max_segment_length} ]]; then
-    local -r segment_length=$((${max_segment_length} - 1))
+    local -r segment_length=$((max_segment_length - 1))
   else
     local -r segment_length=1
   fi
@@ -175,16 +175,6 @@ function _setup_input {
     "${terminfo[kdch1]}" delete-char
 }
 
-function _setup_fzf {
-  # Auto-completion
-  # ---------------
-  [[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2>/dev/null
-
-  # Key bindings
-  # ------------
-  source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
-}
-
 function _setup_p10k {
   source "${HOME}/.p10k/powerlevel10k.zsh-theme"
 
@@ -192,8 +182,13 @@ function _setup_p10k {
   [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
 }
 
-function _setup_homebrew {
+function _setup_brew_integration {
   source <(/opt/homebrew/bin/brew shellenv)
+
+  if brew list --formula | grep -q '^fzf$'; then
+    eval "$(fzf --zsh)"
+  fi
+
   if brew list --formula | grep -q '^rustup$'; then
     local -r RUSTUP_BIN_DIR="$(brew --prefix rustup)/bin"
 
@@ -201,21 +196,116 @@ function _setup_homebrew {
       export PATH="${RUSTUP_BIN_DIR}:${PATH}"
     fi
   fi
+
+  if brew list --formula | grep -q '^fnm$'; then
+    eval "$(fnm env --use-on-cd --version-file-strategy=recursive)" || true
+  fi
 }
 
 add-zsh-hook precmd _set_term_title
 _setup_completion
 _setup_input
-_setup_fzf
-_setup_homebrew
 _setup_p10k
+_setup_brew_integration
 
-# handy functions below
+# handy function definitions below
 
 function pdfcompress {
-  local -r input="${1}"
-  local -r output="${2:-$(dirname ${input})/compressed-$(basename ${input})}"
-  local -r password="${3:-}"
+  local input="" output="" password="" level="screen"
+  local -a GS_OPTIONS=("-sDEVICE=pdfwrite")
 
-  gs -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -sPDFPassword="${password}" -q -o "${output}" "${input}"
+  usage() {
+    cat <<EOF
+Usage: pdfcompress -i|--input <input.pdf> [-o|--output <output.pdf>] [-p|--password <password>] [-l|--level <screen|ebook|printer|prepress>]
+
+  -i, --input     Path to the source PDF (required)
+  -o, --output    Path for the compressed PDF (default: same dir, prefixed "compressed-")
+  -p, --password  PDF password, if any
+  -l, --level     Compression preset: screen, ebook, printer, or prepress (default: screen)
+  -h, --help      Show this help message and exit
+EOF
+  }
+
+  # Check for Ghostscript
+  if ! command -v gs >/dev/null 2>&1; then
+    echo "Error: Ghostscript (gs) not found. Please install it first." >&2
+    return 1
+  fi
+
+  # Parse command-line arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -i | --input)
+      input="$2"
+      shift 2
+      ;;
+    -o | --output)
+      output="$2"
+      shift 2
+      ;;
+    -p | --password)
+      password="$2"
+      shift 2
+      ;;
+    -l | --level)
+      level="$2"
+      shift 2
+      ;;
+    -h | --help)
+      usage
+      return 0
+      ;;
+    *)
+      echo "Error: Invalid option '$1'" >&2
+      usage
+      return 1
+      ;;
+    esac
+  done
+
+  # Validate input
+  if [[ -z "${input}" ]]; then
+    echo "Error: --input is required" >&2
+    usage
+    return 1
+  fi
+  if [[ ! -f "${input}" ]]; then
+    echo "Error: Input file '${input}' not found" >&2
+    return 1
+  fi
+
+  if [[ -z "${output}" ]]; then
+    output="$(dirname "${input}")/compressed-$(basename "${input}")"
+  fi
+
+  case "${level}" in
+  screen | ebook | printer | prepress)
+    GS_OPTIONS+=("-dPDFSETTINGS=/${level}")
+    ;;
+  *)
+    echo "Error: Invalid level '${level}'" >&2
+    usage
+    return 1
+    ;;
+  esac
+
+  local -r target=$(mktemp)
+  local -r orig_size=$(stat -f%z "${input}")
+
+  echo -n "Compressing ${input}... "
+  gs "${GS_OPTIONS[@]}" \
+    ${password:+-sPDFPassword="$password"} \
+    -q -o "${target}" "${input}"
+
+  # Ensure output directory
+  mkdir -p "$(dirname "${output}")"
+
+  # Write temporary target to desired location
+  mv "${target}" "${output}"
+
+  # Report compression metrics
+  local -r comp_size=$(stat -f%z "${output}")
+  echo "Done:
+  Result: ${output}
+  Stats: ${orig_size}B -> ${comp_size}B ($((comp_size * 100 / orig_size))% of original)"
 }
