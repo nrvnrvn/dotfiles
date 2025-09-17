@@ -61,9 +61,9 @@ ensure_terminal() {
 
 ensure_neovim() {
   local -r python_path="${HOME}/.local/share/nvim-python"
-  local -r python_version='3.13'
+  local -r python_version='3.13.7'
   local -r node_path="${HOME}/.local/share/nvim-node"
-  local -r node_version='24'
+  local -r node_version='24.8.0'
 
   echo "Installing Neovim and dependencies..."
   brew install --quiet --require-sha neovim fzf fd ripgrep lazygit wget fnm uv
