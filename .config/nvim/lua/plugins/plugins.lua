@@ -1,19 +1,6 @@
 return {
   -- editor
   {
-    "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      {
-        "mason-org/mason.nvim",
-        opts = {
-          ensure_installed = {
-            "tree-sitter-cli",
-          },
-        },
-      },
-    },
-  },
-  {
     "MagicDuck/grug-far.nvim",
     dependencies = {
       {
@@ -28,11 +15,10 @@ return {
   },
 
   -- colorscheme
-  { "EdenEast/nightfox.nvim" },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "nordfox",
+      colorscheme = "tokyonight-moon",
     },
   },
 
