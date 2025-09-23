@@ -12,6 +12,7 @@ alias \
   grep='grep --color=auto --exclude-dir=.git' \
   rg='rg --colors="match:fg:yellow"' \
   k=kubectl \
+  lg=lazygit \
   ll='ls -Glh' \
   lla='ls -Glha' \
   ls='ls -G' \

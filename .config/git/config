@@ -1,8 +1,9 @@
 [alias]
 	a = add
 	c = commit
+	cl = "!set -eu; f(){ local url=\"$1\"; local target=\"${url%.git}\"; target=\"${target#*://}\"; target=\"${target#*@}\"; target=\"${target//://}\"; target=\"${target%.git}\"; git clone \"${url}\" \"${target}\";}; f"
 	co = checkout
-	config-sort = "!f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.config/git/config | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.config/git/config.new && mv ~/.config/git/config.new ~/.config/git/config; }; f"
+	config-sort = "!set -euo pipefail; f() { awk -F '\t' '$1 { section = $1; print section } $2 { print section \"\t\" $2}' ~/.config/git/config | sort -u | awk -F '\t' '!$2 { print $1 } $1 && $2 { print \"\t\" $2 }' > ~/.config/git/config.new && mv ~/.config/git/config.new ~/.config/git/config; }; f"
 	d = diff
 	fap = fetch --all --prune
 	flush = reset --hard HEAD

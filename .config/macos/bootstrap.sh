@@ -69,11 +69,12 @@ ensure_neovim() {
   brew install --quiet --require-sha neovim fzf fd ripgrep lazygit wget fnm uv
 
   echo "Setting up Python environment for Neovim..."
-  uv venv --python "${python_version}" --seed "${python_path}"
+  uv venv --python "${python_version}" --clear --seed "${python_path}"
   uv pip install pynvim --python "${python_path}"
 
   echo "Setting up Node.js environment for Neovim..."
   fnm install --fnm-dir "${node_path}" "${node_version}"
+  fnm default --fnm-dir "${node_path}" "${node_version}"
   fnm exec --fnm-dir "${node_path}" --using "${node_version}" npm update -g
   fnm exec --fnm-dir "${node_path}" --using "${node_version}" npm i -g neovim
 
