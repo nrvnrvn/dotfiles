@@ -75,16 +75,6 @@ return {
   -- html
   {
     "stevearc/conform.nvim",
-    dependencies = {
-      {
-        "mason-org/mason.nvim",
-        opts = {
-          ensure_installed = {
-            "prettier",
-          },
-        },
-      },
-    },
     opts = {
       formatters_by_ft = {
         html = { "prettier" },

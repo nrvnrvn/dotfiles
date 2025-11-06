@@ -63,20 +63,23 @@ ensure_neovim() {
   local -r python_path="${HOME}/.local/share/nvim-python"
   local -r python_version='3.13.9'
   local -r node_path="${HOME}/.local/share/nvim-node"
-  local -r node_version='24.10.0'
+  local -r node_version='24.11.0'
+  local -r dirs_to_clean=("${node_path}" "${HOME}/.local/share/nvim" "${HOME}/.local/state/nvim" "${HOME}/.cache/nvim")
+
+  echo "Preparing for a fresh Neovim install..."
+  rm -rf "${dirs_to_clean[@]}"
 
   echo "Installing Neovim and dependencies..."
   brew install --quiet --require-sha neovim fzf fd ripgrep lazygit wget fnm uv
 
   echo "Setting up Python environment for Neovim..."
-  uv venv --python "${python_version}" --clear --seed "${python_path}"
-  uv pip install pynvim --python "${python_path}"
+  uv --quiet venv --python "${python_version}" --clear --seed "${python_path}"
+  uv --quiet pip install --python "${python_path}" pynvim
 
   echo "Setting up Node.js environment for Neovim..."
-  rm -rf "${node_path}"
-  fnm install --fnm-dir "${node_path}" "${node_version}"
-  fnm exec --fnm-dir "${node_path}" --using "${node_version}" npm update -g
-  fnm exec --fnm-dir "${node_path}" --using "${node_version}" npm i -g neovim
+  fnm --log-level error --fnm-dir "${node_path}" install "${node_version}"
+  fnm --log-level error --fnm-dir "${node_path}" exec --using "${node_version}" npm update -g
+  fnm --log-level error --fnm-dir "${node_path}" exec --using "${node_version}" npm install -g neovim
 
   echo "Neovim setup complete."
 }
