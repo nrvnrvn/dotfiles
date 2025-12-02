@@ -183,23 +183,29 @@ function _setup_p10k {
   [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"
 }
 
-function _setup_brew_integration {
-  source <(/opt/homebrew/bin/brew shellenv)
+function _setup_shell_integration {
+  if [[ "$(uname -s)" = "Darwin" ]]; then
+    # shellcheck source=/dev/null
+    source <(/opt/homebrew/bin/brew shellenv)
 
-  if brew list --formula | grep -q '^fzf$'; then
-    eval "$(fzf --zsh)"
-  fi
+    # rustup if installed via brew requires PATH extension
+    if [[ -x "$(command -v rustup)" ]]; then
+      local -r RUSTUP_BIN_DIR="$(brew --prefix rustup)/bin"
 
-  if brew list --formula | grep -q '^rustup$'; then
-    local -r RUSTUP_BIN_DIR="$(brew --prefix rustup)/bin"
-
-    if [[ ":${PATH}:" != *:"${RUSTUP_BIN_DIR}":* ]]; then
-      export PATH="${RUSTUP_BIN_DIR}:${PATH}"
+      if [[ ":${PATH}:" != *:"${RUSTUP_BIN_DIR}":* ]]; then
+        export PATH="${RUSTUP_BIN_DIR}:${PATH}"
+      fi
     fi
   fi
 
-  if brew list --formula | grep -q '^fnm$'; then
-    eval "$(fnm env --use-on-cd --version-file-strategy=recursive)" || true
+  if [[ -x "$(command -v fzf)" ]]; then
+    # shellcheck source=/dev/null
+    source <(fzf --zsh)
+  fi
+
+  if [[ -x "$(command -v fnm)" ]]; then
+    # shellcheck source=/dev/null
+    source <(fnm env --use-on-cd --version-file-strategy=recursive) || true
   fi
 }
 
@@ -221,5 +227,5 @@ add-zsh-hook precmd _set_term_title
 _setup_completion
 _setup_input
 _setup_p10k
-_setup_brew_integration
+_setup_shell_integration
 _setup_extras

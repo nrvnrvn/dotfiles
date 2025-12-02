@@ -1,14 +1,20 @@
 # Dotfiles
 
+<!--toc:start-->
+- [Dotfiles](#dotfiles)
+  - [1. Quickstart](#1-quickstart)
+  - [2. Features](#2-features)
+<!--toc:end-->
+
 Managed in a proper way.
 
-## Quickstart
+## 1. Quickstart
 
 ```sh
-curl -fsS https://raw.githubusercontent.com/nrvnrvn/dotfiles/refs/heads/main/.config/macos/bootstrap.sh | bash -s all
+curl -fsS https://raw.githubusercontent.com/nrvnrvn/dotfiles/refs/heads/main/.bootstrap.sh | bash -s all
 ```
 
-## Features
+## 2. Features
 
 - dotfiles are laid out where they belong. Your home dir is your github repo. With two caveats:
   - use `dotfiles` instead of `git` to manage "dotfiles".

@@ -3,6 +3,8 @@
 -- Add any additional options here
 vim.opt.title = true
 vim.opt.colorcolumn = "120"
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
 
 local share_path = os.getenv("HOME") .. "/.local/share"
 vim.env.PATH =

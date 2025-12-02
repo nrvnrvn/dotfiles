@@ -5,6 +5,10 @@ set -o pipefail
 # set -o xtrace
 
 ensure_xcode() {
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    return
+  fi
+
   echo "Checking for Xcode command line tools..."
 
   while [[ "$(xcode-select --install 2>&1)" == "xcode-select: note: install requested for command line developer tools" ]]; do
@@ -16,6 +20,10 @@ ensure_xcode() {
 }
 
 ensure_brew() {
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    return
+  fi
+
   echo "Checking for Homebrew..."
 
   if [[ ! -x "/opt/homebrew/bin/brew" ]]; then
@@ -52,6 +60,10 @@ ensure_dotfiles() {
 }
 
 ensure_terminal() {
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    return
+  fi
+
   echo "Installing terminal dependencies..."
 
   brew install --quiet --require-sha ghostty font-iosevka fzf
@@ -70,7 +82,9 @@ ensure_neovim() {
   rm -rf "${dirs_to_clean[@]}"
 
   echo "Installing Neovim and dependencies..."
-  brew install --quiet --require-sha neovim fzf fd ripgrep lazygit wget fnm uv
+  if [[ "$(uname -s)" = "Darwin" ]]; then
+    brew install --quiet --require-sha neovim fzf fd ripgrep lazygit wget fnm uv
+  fi
 
   echo "Setting up Python environment for Neovim..."
   uv --quiet venv --python "${python_version}" --clear --seed "${python_path}"
@@ -84,7 +98,11 @@ ensure_neovim() {
   echo "Neovim setup complete."
 }
 
-ensure_defaults() {
+ensure_defaults_macos() {
+  if [[ "$(uname -s)" != "Darwin" ]]; then
+    return
+  fi
+
   echo "Configuring macOS defaults..."
 
   # Only use UTF-8 in Terminal.app
@@ -136,23 +154,23 @@ ensure_hosts() {
 
 usage() {
   cat <<EOF
-Bootstrap macOS in an idempotent fashion
+Bootstrap dotfiles in an idempotent fashion
 
 Usage:
-  $0 {xcode | dotfiles | brew | terminal | neovim | defaults | hosts | all}
+  bash $0 {xcode | dotfiles | brew | terminal | neovim | defaults_macos | hosts | all}
 
 Available commands:
-  xcode      Install and verify Xcode command line tools
-  dotfiles   Clone and set up dotfiles
-  brew       Install Homebrew if not already installed
-  terminal   Install terminal emulator and its dependencies
-  neovim     Set up Neovim with some goodies
-  defaults   Apply preferred macOS system defaults
-  hosts      Update the /etc/hosts file with entries from StevenBlack's list
-  all        Run all of the above in sequence
+  xcode             Install and verify Xcode command line tools
+  dotfiles          Clone and set up dotfiles
+  brew              Install Homebrew if not already installed
+  terminal          Install terminal emulator and its dependencies
+  neovim            Set up Neovim with some goodies
+  defaults_macos    Apply preferred macOS system defaults
+  hosts             Update the /etc/hosts file with entries from StevenBlack's list
+  all               Run all of the above in sequence
 
 Example:
-  $0 all
+  bash $0 all
 EOF
 
   exit 1
@@ -167,7 +185,7 @@ main() {
   # Execute functions based on arguments
   for arg in "$@"; do
     case "$arg" in
-    xcode | dotfiles | brew | terminal | neovim | defaults | hosts)
+    xcode | dotfiles | brew | terminal | neovim | defaults_macos | hosts)
       "ensure_${arg}"
       ;;
     all)
@@ -176,7 +194,7 @@ main() {
       ensure_brew
       ensure_terminal
       ensure_neovim
-      ensure_defaults
+      ensure_defaults_macos
       ensure_hosts
       ;;
     *)
