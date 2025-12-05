@@ -1,5 +1,6 @@
 font-family = "Iosevka Term Medium"
 font-size = 16
+keybind = global:cmd+backquote=toggle_quick_terminal
 shell-integration-features = no-title
 theme = "TokyoNight Moon"
 unfocused-split-fill = black

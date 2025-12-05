@@ -25,4 +25,4 @@ curl -fsS https://raw.githubusercontent.com/nrvnrvn/dotfiles/refs/heads/main/.bo
 - neovim for something more than that.
 - git config with solid defaults.
 - ssh config also worth looking at.
-- macOS tailored. Used to support Linux as well back in the day.
+- macOS tailored. Supports Linux to some extent.
