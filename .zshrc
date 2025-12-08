@@ -10,12 +10,13 @@ alias \
   dotfiles='/usr/bin/git --git-dir=${HOME}/.config/dotfiles --work-tree=${HOME}' \
   g=git \
   grep='grep --color=auto --exclude-dir=.git' \
-  rg='rg --colors="match:fg:yellow"' \
+  history='history -t "%F %T"' \
   k=kubectl \
   lg=lazygit \
   ll='ls -Glh' \
   lla='ls -Glha' \
   ls='ls -G' \
+  rg='rg --colors="match:fg:yellow"' \
   vim=nvim
 
 export \
@@ -56,7 +57,7 @@ setopt \
   extended_glob \
   extended_history \
   hist_expire_dups_first \
-  hist_ignore_dups \
+  hist_ignore_all_dups \
   hist_ignore_space \
   hist_reduce_blanks \
   hist_verify \
@@ -83,11 +84,19 @@ function _setup_completion {
   fi
 
   zstyle -e ':completion:*:approximate:*'         max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
-  zstyle ':completion:*:-tilde-:*'                group-order 'named-directories' 'path-directories' 'users' 'expand'
-  zstyle ':completion:*:*:-subscript-:*'          tag-order indexes parameters
+  zstyle ':completion:*'                          accept-exact '*(N)'
+  zstyle ':completion:*'                          completer _complete _match _approximate
+  zstyle ':completion:*'                          format '%f -- %F{yellow}%d%f --'
+  zstyle ':completion:*'                          group-name ''
+  zstyle ':completion:*'                          matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+  zstyle ':completion:*'                          squeeze-slashes true
+  zstyle ':completion:*'                          use-cache yes
+  zstyle ':completion:*'                          verbose yes
   zstyle ':completion:*:*:*:*:*'                  menu select
-  zstyle ':completion:*:*:cd:*:directory-stack'   menu yes select
+  zstyle ':completion:*:*:-subscript-:*'          tag-order indexes parameters
   zstyle ':completion:*:*:cd:*'                   tag-order local-directories directory-stack path-directories
+  zstyle ':completion:*:*:cd:*:directory-stack'   menu yes select
+  zstyle ':completion:*:-tilde-:*'                group-order 'named-directories' 'path-directories' 'users' 'expand'
   zstyle ':completion:*:approximate:*'            max-errors 1 numeric
   zstyle ':completion:*:corrections'              format '%f -- %F{green}%d (errors: %e)%f --'
   zstyle ':completion:*:default'                  list-colors ${(s.:.):-di=1;34:ln=35:so=32:pi=33:ex=31:bd=1;36:cd=1;33:su=30;41:sg=30;46:tw=30;42:ow=30;43}
@@ -104,14 +113,6 @@ function _setup_completion {
   zstyle ':completion:*:options'                  auto-description '%d'
   zstyle ':completion:*:options'                  description yes
   zstyle ':completion:*:warnings'                 format '%f -- %F{red}no matches found%f --'
-  zstyle ':completion:*'                          accept-exact '*(N)'
-  zstyle ':completion:*'                          completer _complete _match _approximate
-  zstyle ':completion:*'                          format '%f -- %F{yellow}%d%f --'
-  zstyle ':completion:*'                          group-name ''
-  zstyle ':completion:*'                          matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-  zstyle ':completion:*'                          squeeze-slashes true
-  zstyle ':completion:*'                          use-cache yes
-  zstyle ':completion:*'                          verbose yes
 }
 
 # Shorten path to fit into a tab size
