@@ -12,7 +12,12 @@ f() {
   target="${target#*@}"
   target="${HOME}/Projects/${target//://}"
 
-  git clone "${url}" "${target}" "$@"
+  if [[ ! -d "${target}" ]]; then
+    git clone "${url}" "${target}" "$@"
+  fi
+
+  printf "Cloned %s into:\n" "${url}" >&2
+  printf "%s" "${target}"
 }
 
 f "$@"
