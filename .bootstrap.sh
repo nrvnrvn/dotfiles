@@ -73,9 +73,9 @@ ensure_terminal() {
 
 ensure_neovim() {
   local -r python_path="${HOME}/.local/share/nvim-python"
-  local -r python_version='3.14.2'
+  local -r python_version="3.14.3"
   local -r node_path="${HOME}/.local/share/nvim-node"
-  local -r node_version='24.11.1'
+  local -r node_version="24.14.0"
   local -r dirs_to_clean=("${node_path}" "${HOME}/.local/share/nvim" "${HOME}/.local/state/nvim" "${HOME}/.cache/nvim")
 
   echo "Preparing for a fresh Neovim install..."
@@ -147,7 +147,7 @@ ensure_hosts() {
 
   # Allow one domain for the sake of google search results working correctly for advertised products.
   curl -fsS https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts | rg -v www.googleadservices.com >/tmp/etc_hosts
-  sudo bash -o errexit -o nounset -o pipefail -o xtrace -c 'cp /tmp/etc_hosts /etc/hosts; dscacheutil -flushcache; killall -HUP mDNSResponder; killall -9 mDNSResponder; killall mDNSResponderHelper'
+  sudo bash -o errexit -o nounset -o pipefail -o xtrace -c "cp /tmp/etc_hosts /etc/hosts; dscacheutil -flushcache; killall -HUP mDNSResponder; killall -9 mDNSResponder; killall mDNSResponderHelper"
 
   echo "/etc/hosts file updated."
 }
@@ -178,7 +178,7 @@ EOF
 
 main() {
   # Check if arguments are provided
-  if [ "$#" -eq 0 ]; then
+  if [[ "$#" -eq 0 ]]; then
     usage
   fi
 
