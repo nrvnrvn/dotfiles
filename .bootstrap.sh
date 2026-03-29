@@ -75,8 +75,8 @@ ensure_neovim() {
   local -r python_path="${HOME}/.local/share/nvim-python"
   local -r python_version="3.14.3"
   local -r node_path="${HOME}/.local/share/nvim-node"
-  local -r node_version="24.14.0"
-  local -r dirs_to_clean=("${node_path}" "${HOME}/.local/share/nvim" "${HOME}/.local/state/nvim" "${HOME}/.cache/nvim")
+  local -r node_version="24.14.1"
+  local -r dirs_to_clean=("${node_path}" "${HOME}/.local/share/nvim" "${HOME}/.cache/nvim")
 
   echo "Preparing for a fresh Neovim install..."
   rm -rf "${dirs_to_clean[@]}"
