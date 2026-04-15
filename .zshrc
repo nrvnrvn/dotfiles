@@ -76,7 +76,6 @@ function refresh_completions {
 # cache time of 23 hours, so it should almost always regenerate the first time a
 # shell is opened each day.
 function _setup_completion {
-  fpath=(/opt/homebrew/share/zsh/site-functions "${fpath[@]}")
   if [[ "${HOME}/.zcompdump"(#qNmh-23) ]]; then
     compinit -C
   else
@@ -225,8 +224,8 @@ function _setup_extras {
 }
 
 add-zsh-hook precmd _set_term_title
-_setup_completion
 _setup_input
 _setup_p10k
 _setup_shell_integration
+_setup_completion
 _setup_extras
