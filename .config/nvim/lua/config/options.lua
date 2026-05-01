@@ -5,6 +5,8 @@ vim.opt.title = true
 vim.opt.colorcolumn = "120"
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
+-- See https://www.lazyvim.org/extras/lang/python
+vim.g.lazyvim_python_lsp = "zuban"
 
 local share_path = os.getenv("HOME") .. "/.local/share"
 vim.env.PATH =

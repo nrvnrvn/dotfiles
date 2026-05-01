@@ -26,6 +26,7 @@ export \
   GOPATH="${HOME}/.go" \
   GPG_TTY="${TTY}" \
   GREP_COLOR='1;33' \
+  GREP_COLORS='mt=1;33' \
   HISTSIZE=999999 \
   LANG=en_US.UTF-8 \
   LC_ALL=en_US.UTF-8 \

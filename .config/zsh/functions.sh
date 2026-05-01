@@ -100,7 +100,7 @@ EOF
   Stats: ${orig_size}B -> ${comp_size}B ($((comp_size * 100 / orig_size))% of original)"
 }
 
-ctr() {
+oci() {
   # 1. Check if nerdctl is installed
   if command -v nerdctl >/dev/null 2>&1 && nerdctl info >/dev/null 2>&1; then
     nerdctl "$@"
