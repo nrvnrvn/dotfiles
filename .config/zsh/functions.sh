@@ -108,3 +108,54 @@ oci() {
     docker "$@"
   fi
 }
+
+ksw() {
+  local ctx=""
+  local ns=""
+
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -c | --context)
+      ctx="$2"
+      shift 2
+      ;;
+    -n | --namespace)
+      ns="$2"
+      shift 2
+      ;;
+    *)
+      echo "❌ Error: Unknown option $1"
+      return 1
+      ;;
+    esac
+  done
+
+  # 1. Context Resolution
+  if [[ -z "$ctx" ]]; then
+    # Interactive fallback
+    ctx=$(kubectl config get-contexts -o name | fzf --height 40% --reverse --prompt="⎈ Select Context: ")
+    [[ -z "$ctx" ]] && return 0
+  fi
+
+  # Apply Context & validate
+  if ! kubectl config use-context "$ctx" >/dev/null 2>&1; then
+    echo "❌ Error: Context '$ctx' does not exist."
+    return 1
+  fi
+
+  # 2. Namespace Resolution
+  if [[ -z "$ns" ]]; then
+    # Interactive fallback
+    ns=$(kubectl get namespaces -o custom-columns=NAME:.metadata.name --no-headers 2>/dev/null | fzf --height 40% --reverse --prompt="⎈ Select Namespace [default]: ")
+    [[ -z "$ns" ]] && ns="default"
+  fi
+
+  # Apply Namespace & validate
+  if ! kubectl config set-context --current --namespace="$ns" >/dev/null 2>&1; then
+    echo "❌ Error: Failed to set namespace '$ns'."
+    return 1
+  fi
+
+  echo "⎈ Switched to context \"$ctx\" and namespace \"$ns\"."
+}
